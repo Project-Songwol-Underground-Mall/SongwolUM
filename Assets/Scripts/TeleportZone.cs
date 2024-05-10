@@ -2,9 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Teleport : MonoBehaviour
+public class TeleportZone : MonoBehaviour
 {
     public bool IsFront;
+    public bool IsCorrectDirection;
 
     // Start is called before the first frame update
     void Start()
@@ -16,5 +17,10 @@ public class Teleport : MonoBehaviour
     void Update()
     {
         
+    }
+
+    void setIsCorrectDirection(bool dir)
+    {
+        IsCorrectDirection = dir;
     }
 }

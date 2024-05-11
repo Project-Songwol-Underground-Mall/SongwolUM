@@ -17,8 +17,8 @@ public class CharacterMovement : MonoBehaviour
     public float RotationX;
     public float RotationY;
 
-    private Vector2 movementValue;
-    private float lookValue;
+    private Vector3 RotationDirection;
+    private Vector3 MoveDirection;
 
     private void Awake()
     {
@@ -28,16 +28,19 @@ public class CharacterMovement : MonoBehaviour
 
     public void OnMove(InputValue value)
     {
-        movementValue = value.Get<Vector2>() * MoveSpeed;
+        MoveDirection = value.Get<Vector3>() * MoveSpeed;
     }
 
     public void OnLook(InputValue value)
     {
-        lookValue = value.Get<Vector2>().x * MoveSpeed;
+        //lookValue = value.Get<Vector3>().x * MoveSpeed;
     }
 
     void Update()
     {
+        transform.rotation = Quaternion.LookRotation(MoveDirection);
+        transform.Translate(Vector3.forward * MoveSpeed * Time.deltaTime);
+
         //float h = Input.GetAxis("Horizontal");
         //// h 변수에 키보드의 가로값 (좌, 우) 을 읽어온 결과를 넘긴다.
         //// ◀, ▶, A, D 키

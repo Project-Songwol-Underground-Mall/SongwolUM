@@ -9,8 +9,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 639159683579655698}
-  - component: {fileID: 7901662353141172417}
   - component: {fileID: 326560306013392608}
+  - component: {fileID: 3874006054295773133}
   m_Layer: 0
   m_Name: TeleportPointBack
   m_TagString: Untagged
@@ -33,20 +33,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &7901662353141172417
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1840933127489948102}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3d9dc578330986a4cb7c905c73cc4c27, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  IsFront: 0
-  IsCorrectDirection: 0
 --- !u!65 &326560306013392608
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -60,3 +46,20 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 5, y: 5, z: 0.1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &3874006054295773133
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1840933127489948102}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3d9dc578330986a4cb7c905c73cc4c27, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  OtherTeleportPoint: {fileID: 1840933127489948102}
+  Destinaton: {fileID: 639159683579655698}
+  PlayerCamera: {fileID: 0}
+  IsFront: 0
+  CoolDown: 2

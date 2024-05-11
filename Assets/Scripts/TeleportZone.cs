@@ -4,8 +4,13 @@ using UnityEngine;
 
 public class TeleportZone : MonoBehaviour
 {
+
+    public GameObject OtherTeleportPoint;
+    public GameObject Player;
+    public Transform Destinaton;
+    public Transform PlayerTransform;
     public bool IsFront;
-    public bool IsCorrectDirection;
+    public float CoolDown = 5f;
 
     // Start is called before the first frame update
     void Start()
@@ -19,8 +24,51 @@ public class TeleportZone : MonoBehaviour
         
     }
 
-    void setIsCorrectDirection(bool dir)
+    void OnCollisionEnter(Collision collision)
     {
-        IsCorrectDirection = dir;
+        Debug.Log("충돌 감지!");
+    }
+
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if(other.CompareTag("Player") && CheckCanTeleport())
+        {
+
+            if (IsFront)
+            {
+                other.transform.position = new Vector3(Destinaton.position.x, other.transform.position.y, Destinaton.position.z);
+                Debug.Log("전진하여 텔레포트!");
+            }
+            else
+            {
+                // other.transform.position = new Vector3(Destinaton.position.x, other.transform.position.y, Destinaton.position.z);
+                Debug.Log("후진하여 텔레포트");
+                
+            }
+            Invoke("ResetTeleport", CoolDown);
+        }
+        else Debug.Log("아직 텔레포트 불가");
+    }
+
+    private bool CheckCanTeleport() 
+    {
+
+        GamePlayManager GPM = Player.GetComponent<GamePlayManager>();
+        if (GPM != null && GPM.CanTeleport)
+        {
+            GPM.CanTeleport = false;
+            return true;
+        }
+        return false;
+    }
+
+    private void ResetTeleport()
+    {
+        GamePlayManager GPM = Player.GetComponent<GamePlayManager>();
+        if (GPM != null)
+        {
+            GPM.ResetTeleport();
+        }
     }
 }

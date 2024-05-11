@@ -9177,6 +9177,18 @@ PrefabInstance:
       propertyPath: m_Name
       value: TeleportPointBack
       objectReference: {fileID: 0}
+    - target: {fileID: 3874006054295773133, guid: a36f6c59ef2fe8f4cb2a0b535329dd5c, type: 3}
+      propertyPath: Player
+      value: 
+      objectReference: {fileID: 1461514458}
+    - target: {fileID: 3874006054295773133, guid: a36f6c59ef2fe8f4cb2a0b535329dd5c, type: 3}
+      propertyPath: PlayerCamera
+      value: 
+      objectReference: {fileID: 1461514460}
+    - target: {fileID: 3874006054295773133, guid: a36f6c59ef2fe8f4cb2a0b535329dd5c, type: 3}
+      propertyPath: PlayerTransform
+      value: 
+      objectReference: {fileID: 1461514460}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a36f6c59ef2fe8f4cb2a0b535329dd5c, type: 3}
 --- !u!1 &202905796
@@ -48508,6 +48520,26 @@ PrefabInstance:
       propertyPath: m_IsTrigger
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 1355265549383265514, guid: 0c69dbf0285b2184492b1a5a2a1e7dce, type: 3}
+      propertyPath: Player
+      value: 
+      objectReference: {fileID: 1461514458}
+    - target: {fileID: 1355265549383265514, guid: 0c69dbf0285b2184492b1a5a2a1e7dce, type: 3}
+      propertyPath: Destinaton
+      value: 
+      objectReference: {fileID: 1597067546}
+    - target: {fileID: 1355265549383265514, guid: 0c69dbf0285b2184492b1a5a2a1e7dce, type: 3}
+      propertyPath: PlayerCamera
+      value: 
+      objectReference: {fileID: 1461514460}
+    - target: {fileID: 1355265549383265514, guid: 0c69dbf0285b2184492b1a5a2a1e7dce, type: 3}
+      propertyPath: PlayerTransform
+      value: 
+      objectReference: {fileID: 1461514460}
+    - target: {fileID: 1355265549383265514, guid: 0c69dbf0285b2184492b1a5a2a1e7dce, type: 3}
+      propertyPath: OtherTeleportPoint
+      value: 
+      objectReference: {fileID: 1597067543}
     - target: {fileID: 1627504479041866041, guid: 0c69dbf0285b2184492b1a5a2a1e7dce, type: 3}
       propertyPath: m_Name
       value: TeleportPointFront
@@ -65300,6 +65332,8 @@ GameObject:
   - component: {fileID: 1461514460}
   - component: {fileID: 1461514459}
   - component: {fileID: 1461514461}
+  - component: {fileID: 1461514462}
+  - component: {fileID: 1461514463}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -65357,11 +65391,56 @@ MonoBehaviour:
   characterController: {fileID: 1461514459}
   MoveSpeed: 50
   JumpSpeed: 50
-  Gravity: -20
+  Gravity: -150
   YVelocity: 0
   Sensitivity: 1000
   RotationX: 0
   RotationY: 0
+--- !u!114 &1461514462
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1461514458}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 601b7dad54103a049bf67cec6d608291, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  FrontTeleportZone: {fileID: 2065643466}
+  BackTeleportZone: {fileID: 1597067543}
+  CanTeleport: 1
+--- !u!114 &1461514463
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1461514458}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 62899f850307741f2a39c98a8b639597, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Actions: {fileID: -944628639613478452, guid: 0ffb8215beafb5042845549593753832, type: 3}
+  m_NotificationBehavior: 0
+  m_UIInputModule: {fileID: 0}
+  m_DeviceLostEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  m_DeviceRegainedEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  m_ControlsChangedEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  m_ActionEvents: []
+  m_NeverAutoSwitchControlSchemes: 0
+  m_DefaultControlScheme: 
+  m_DefaultActionMap: Player
+  m_SplitScreenIndex: -1
+  m_Camera: {fileID: 46471538}
 --- !u!1 &1463783022
 GameObject:
   m_ObjectHideFlags: 0
@@ -70890,23 +70969,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 639159683579655698, guid: a36f6c59ef2fe8f4cb2a0b535329dd5c, type: 3}
   m_PrefabInstance: {fileID: 202904957}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &1597067547
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1597067543}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3d9dc578330986a4cb7c905c73cc4c27, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  IsFront: 0
-  IsCorrectDirection: 0
-  OtherTeleportPoint: {fileID: 1597067543}
-  Destinaton: {fileID: 1597067546}
-  CoolDown: 2
 --- !u!1 &1598212887
 GameObject:
   m_ObjectHideFlags: 0
@@ -92510,23 +92572,6 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 1627504479041866041, guid: 0c69dbf0285b2184492b1a5a2a1e7dce, type: 3}
   m_PrefabInstance: {fileID: 1102398750}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &2065643470
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2065643466}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3d9dc578330986a4cb7c905c73cc4c27, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  IsFront: 1
-  IsCorrectDirection: 0
-  OtherTeleportPoint: {fileID: 1597067543}
-  Destinaton: {fileID: 1597067546}
-  CoolDown: 2
 --- !u!1 &2069541896
 GameObject:
   m_ObjectHideFlags: 0

@@ -6,7 +6,6 @@ using UnityEngine;
 public class CharacterMovement : MonoBehaviour
 {
     public Transform CameraTransform;
-    public CharacterController characterController;
 
     public float MoveSpeed; // 이동 속도
     public float RotationSpeed; // 회전 속도
@@ -42,7 +41,12 @@ public class CharacterMovement : MonoBehaviour
     {
         if (RB != null) 
         {
-            RB.AddRelativeForce(MoveValue.x * Time.deltaTime, 0, MoveValue.y * Time.deltaTime);
+            //RB.velocity = new Vector3(MoveValue.x * Time.deltaTime, 0, MoveValue.y * Time.deltaTime);
+            //Vector3 LocalVelocity = transform.InverseTransformDirection(RB.velocity);
+            //LocalVelocity.x = MoveValue.x * Time.deltaTime;
+            //LocalVelocity.z = MoveValue.y * Time.deltaTime;
+            Vector3 LocalVelocity = new Vector3(MoveValue.x * Time.deltaTime, 0, MoveValue.y * Time.deltaTime);
+            RB.velocity = transform.TransformDirection(LocalVelocity);
             RB.AddRelativeTorque(-RotationValue.y * Time.deltaTime, RotationValue.x * Time.deltaTime, 0);
         }
 

@@ -5,8 +5,8 @@ using UnityEngine;
 public class TeleportZone : MonoBehaviour
 {
 
-    public GameObject OtherTeleportPoint;
     public GameObject Player;
+    public Rigidbody RB;
     public Transform Destinaton;
     public Transform PlayerTransform;
     public bool IsFront;
@@ -42,7 +42,10 @@ public class TeleportZone : MonoBehaviour
             }
             else
             {
-                // other.transform.position = new Vector3(Destinaton.position.x, other.transform.position.y, Destinaton.position.z);
+                other.transform.position = new Vector3(Destinaton.position.x, other.transform.position.y, Destinaton.position.z);
+                Vector3 NewRotation = other.transform.eulerAngles;
+                NewRotation.y -= 180f;
+                other.transform.eulerAngles = NewRotation;
                 Debug.Log("후진하여 텔레포트");
                 
             }

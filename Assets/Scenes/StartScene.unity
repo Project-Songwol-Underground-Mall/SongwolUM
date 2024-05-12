@@ -9178,6 +9178,10 @@ PrefabInstance:
       value: TeleportPointBack
       objectReference: {fileID: 0}
     - target: {fileID: 3874006054295773133, guid: a36f6c59ef2fe8f4cb2a0b535329dd5c, type: 3}
+      propertyPath: RB
+      value: 
+      objectReference: {fileID: 1461514464}
+    - target: {fileID: 3874006054295773133, guid: a36f6c59ef2fe8f4cb2a0b535329dd5c, type: 3}
       propertyPath: Player
       value: 
       objectReference: {fileID: 1461514458}
@@ -48521,6 +48525,10 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1355265549383265514, guid: 0c69dbf0285b2184492b1a5a2a1e7dce, type: 3}
+      propertyPath: RB
+      value: 
+      objectReference: {fileID: 1461514464}
+    - target: {fileID: 1355265549383265514, guid: 0c69dbf0285b2184492b1a5a2a1e7dce, type: 3}
       propertyPath: Player
       value: 
       objectReference: {fileID: 1461514458}
@@ -65370,10 +65378,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 40c175ed6a969e74fbc2a6337c01edf5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  CameraTransform: {fileID: 0}
-  characterController: {fileID: 0}
-  MoveSpeed: 5000
-  RotationSpeed: 1000
+  CameraTransform: {fileID: 46471535}
+  MoveSpeed: 30000
+  RotationSpeed: 500
   Gravity: -150
   YVelocity: 0
   Sensitivity: 1000
@@ -65433,8 +65440,8 @@ Rigidbody:
   m_GameObject: {fileID: 1461514458}
   serializedVersion: 2
   m_Mass: 1
-  m_Drag: 2
-  m_AngularDrag: 9
+  m_Drag: 10
+  m_AngularDrag: 10
   m_UseGravity: 0
   m_IsKinematic: 0
   m_Interpolate: 0

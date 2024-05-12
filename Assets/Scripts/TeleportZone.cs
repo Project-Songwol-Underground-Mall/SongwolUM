@@ -8,7 +8,6 @@ public class TeleportZone : MonoBehaviour
     public GameObject Player;
     public Rigidbody RB;
     public Transform Destination;
-    public Transform PlayerTransform;
     public bool IsFront;
     public float CoolDown = 5f;
 
@@ -24,12 +23,6 @@ public class TeleportZone : MonoBehaviour
         
     }
 
-    void OnCollisionEnter(Collision collision)
-    {
-        Debug.Log("충돌 감지!");
-    }
-
-
     private void OnTriggerEnter(Collider other)
     {
         Debug.Log("충돌 지점 좌표: " + other.transform.position);
@@ -44,7 +37,6 @@ public class TeleportZone : MonoBehaviour
             if (IsFront)
             {
                 other.transform.position = DestinationPosition - Normal;
-                Debug.Log("전진하여 텔레포트!");
             }
             else
             {
@@ -52,9 +44,9 @@ public class TeleportZone : MonoBehaviour
                 Vector3 NewRotation = other.transform.eulerAngles;
                 NewRotation.y -= 180f;
                 other.transform.eulerAngles = NewRotation;
-                Debug.Log("후진하여 텔레포트");
-                
             }
+            // GPM의 ChangeStage 호출, 부딪힌 텔레포트존의 앞뒤 여부와 현재 스테이지 이상현상 유무에 따른 처리 진행
+            Player.GetComponent<GamePlayManager>().ChangeStage(IsFront); 
             Invoke("ResetTeleport", CoolDown);
         }
         else Debug.Log("아직 텔레포트 불가");

@@ -22600,6 +22600,72 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 495955632}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!1 &499001912
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 499001914}
+  - component: {fileID: 499001913}
+  m_Layer: 0
+  m_Name: SpawnManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &499001913
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 499001912}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: feed3a3df1b597f4fb05d536e3ca8f62, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  PhenomenonSpawner:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  IsNormal: 1
+--- !u!4 &499001914
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 499001912}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 6.308182, y: -150.02718, z: 317.15344}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 18
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &505183072
 GameObject:
   m_ObjectHideFlags: 0
@@ -65403,7 +65469,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   CameraTransform: {fileID: 46471535}
-  MoveSpeed: 30000
+  MoveSpeed: 50000
   RotationSpeed: 500
   Gravity: -150
   YVelocity: 0
@@ -65422,8 +65488,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 601b7dad54103a049bf67cec6d608291, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  FrontTeleportZone: {fileID: 2065643466}
-  BackTeleportZone: {fileID: 1597067543}
+  SpawnManager: {fileID: 499001912}
   CanTeleport: 1
 --- !u!114 &1461514463
 MonoBehaviour:
@@ -92611,11 +92676,6 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2065372650}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
---- !u!1 &2065643466 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 1627504479041866041, guid: 0c69dbf0285b2184492b1a5a2a1e7dce, type: 3}
-  m_PrefabInstance: {fileID: 1102398750}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &2069541896
 GameObject:
   m_ObjectHideFlags: 0

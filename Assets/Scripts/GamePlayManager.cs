@@ -4,15 +4,12 @@ using UnityEngine;
 
 public class GamePlayManager : MonoBehaviour
 {
-    public GameObject FrontTeleportZone;
-    public GameObject BackTeleportZone;
-
     public bool CanTeleport = true;
 
     int CurrentStage = 0; // 현재 구역 번호
+    bool IsNormalStage = true; // 스테이지의 정상 및 이상현상 여부
     int AbnormalNumber = -1; // 이상현상 스테이지에서 발생시킬 이상현상 번호
     bool[] IsAbnormalOccured = new bool[20]; // 이상현상 번호에 따른 발생 여부
-    bool IsNormalStage = true; // 스테이지의 정상 및 이상현상 여부
 
     // Start is called before the first frame update
     void Start()

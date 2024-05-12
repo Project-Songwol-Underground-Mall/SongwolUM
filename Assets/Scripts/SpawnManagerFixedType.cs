@@ -5,9 +5,6 @@ using UnityEngine;
 public class SpawnManagerFixedType : MonoBehaviour
 {
 
-    public string PhenomenonName = "";
-    public bool IsNormal = true;
-
     // Start is called before the first frame update
     void Start()
     {

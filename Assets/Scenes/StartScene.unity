@@ -65403,7 +65403,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   CameraTransform: {fileID: 46471535}
-  MoveSpeed: 30000
+  MoveSpeed: 50000
   RotationSpeed: 500
   Gravity: -150
   YVelocity: 0

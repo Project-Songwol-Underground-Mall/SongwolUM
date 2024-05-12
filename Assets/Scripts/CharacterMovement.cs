@@ -5,11 +5,11 @@ using UnityEngine;
 
 public class CharacterMovement : MonoBehaviour
 {
-    public Transform cameraTransform;
+    public Transform CameraTransform;
     public CharacterController characterController;
 
-    public float MoveSpeed = 10f; // 이동 속도
-    public float JumpSpeed = 10f; // 점프 속도
+    public float MoveSpeed; // 이동 속도
+    public float RotationSpeed; // 회전 속도
     public float Gravity = -20f; // 중력
     public float YVelocity = 0; // Y축 움직임
 
@@ -17,66 +17,40 @@ public class CharacterMovement : MonoBehaviour
     public float RotationX;
     public float RotationY;
 
-    private Vector3 RotationDirection;
-    private Vector3 MoveDirection;
+    private Vector2 RotationValue;
+    private Vector2 MoveValue;
+    private Rigidbody RB;
 
     private void Awake()
     {
         Cursor.visible = false;
         Cursor.lockState = CursorLockMode.Locked;
+        RB = GetComponent<Rigidbody>();
     }
 
     public void OnMove(InputValue value)
     {
-        MoveDirection = value.Get<Vector3>() * MoveSpeed;
+        MoveValue = value.Get<Vector2>() * MoveSpeed;
     }
 
     public void OnLook(InputValue value)
     {
-        //lookValue = value.Get<Vector3>().x * MoveSpeed;
+        RotationValue = value.Get<Vector2>() * RotationSpeed;
     }
 
     void Update()
     {
-        transform.rotation = Quaternion.LookRotation(MoveDirection);
-        transform.Translate(Vector3.forward * MoveSpeed * Time.deltaTime);
+        if (RB != null) 
+        {
+            RB.AddRelativeForce(MoveValue.x * Time.deltaTime, 0, MoveValue.y * Time.deltaTime);
+            RB.AddRelativeTorque(-RotationValue.y * Time.deltaTime, RotationValue.x * Time.deltaTime, 0);
+        }
 
-        //float h = Input.GetAxis("Horizontal");
-        //// h 변수에 키보드의 가로값 (좌, 우) 을 읽어온 결과를 넘긴다.
-        //// ◀, ▶, A, D 키
-
-        //float v = Input.GetAxis("Vertical");
-        //// v 변수에 키보드의 세로값 (상, 하) 을 읽어온 결과를 넘긴다.
-        //// ▲, ▼, W, S 키
-
-        //Vector3 MoveDirection = new Vector3(h, 0, v);
-
-        //MoveDirection = cameraTransform.TransformDirection(MoveDirection);
-
-        //MoveDirection *= MoveSpeed;
-
-        //if (characterController.isGrounded)
-        //{
-        //    YVelocity = 0;
-        //    if (Input.GetKeyDown(KeyCode.Space))
-        //    {
-        //        YVelocity = JumpSpeed;
-        //    }
-        //}
-
-        //YVelocity += (Gravity * Time.deltaTime);
-        //MoveDirection.y = YVelocity;
-        //characterController.Move(MoveDirection * Time.deltaTime);
-
-
-        //float MouseX = Input.GetAxis("Mouse X");
-        //float MouseY = Input.GetAxis("Mouse Y");
-
-        //RotationX += MouseY * Sensitivity * 5f * Time.deltaTime;
-        //RotationY += MouseX * Sensitivity * 5f * Time.deltaTime;
-
-        //if (RotationX > 35f) RotationX = 35f;
-        //if (RotationX < -30f) RotationX = -30f;
-        //cameraTransform.eulerAngles = new Vector3(-RotationX, RotationY, 0);
+        // 플레이어(에 종속되어있는 카메라)의 z축 rotation 고정, x축 로테이션 범위 제한
+        Vector3 currentRotation = transform.eulerAngles;
+        currentRotation.z = 0f;
+        if (35f < currentRotation.x && currentRotation.x < 180f) currentRotation.x = 35f;
+        if (180f < currentRotation.x && currentRotation.x < 330f) currentRotation.x = 330f;
+        transform.eulerAngles = currentRotation;
     }
 }

@@ -9,12 +9,6 @@ public class CharacterMovement : MonoBehaviour
 
     public float MoveSpeed; // 이동 속도
     public float RotationSpeed; // 회전 속도
-    public float Gravity = -20f; // 중력
-    public float YVelocity = 0; // Y축 움직임
-
-    public float Sensitivity = 1f;
-    public float RotationX;
-    public float RotationY;
 
     private Vector2 RotationValue;
     private Vector2 MoveValue;

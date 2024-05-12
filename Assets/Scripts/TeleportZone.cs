@@ -6,6 +6,7 @@ public class TeleportZone : MonoBehaviour
 {
 
     public GameObject Player;
+    public GameObject GuideBoard;
     public Rigidbody RB;
     public Transform Destination;
     public bool IsFront;
@@ -25,7 +26,11 @@ public class TeleportZone : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        Debug.Log("충돌 지점 좌표: " + other.transform.position);
+        if (GuideBoard != null) 
+        {
+            Destroy(GuideBoard);
+        }
+
         // Debug.Log("텔레포트 영역 중심 기준으로 얼마나 떨어져 있는가 : " + transform.position - other.transform.position);
         if (other.CompareTag("Player") && CheckCanTeleport())
         {

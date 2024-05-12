@@ -35,8 +35,9 @@ public class PhenomenonManagement : MonoBehaviour
 
         for (int i = 0; i < PhenomenonSpawner.Length; i++)
         {
-            if (i == PhenomenonNumber && !isNormal) Spawn(i, false);
-            else Spawn(i, true);
+            // 스폰은 세현이가 인스펙터에 오브젝트 다 넣으면 주석 풀기
+            //if (i == PhenomenonNumber && !isNormal) Spawn(i, false);
+            //else Spawn(i, true);
         }
 
     }

@@ -65330,7 +65330,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1461514460}
-  - component: {fileID: 1461514459}
+  - component: {fileID: 1461514464}
+  - component: {fileID: 1461514465}
   - component: {fileID: 1461514461}
   - component: {fileID: 1461514462}
   - component: {fileID: 1461514463}
@@ -65341,24 +65342,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!143 &1461514459
-CharacterController:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1461514458}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Height: 10
-  m_Radius: 0.5
-  m_SlopeLimit: 45
-  m_StepOffset: 0.3
-  m_SkinWidth: 0.08
-  m_MinMoveDistance: 0.001
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!4 &1461514460
 Transform:
   m_ObjectHideFlags: 0
@@ -65367,7 +65350,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1461514458}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 28.242645, y: 4.14, z: 68.39}
+  m_LocalPosition: {x: 28.242645, y: 2, z: 68.39}
   m_LocalScale: {x: 6.0041, y: 1.6026833, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -65387,10 +65370,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 40c175ed6a969e74fbc2a6337c01edf5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cameraTransform: {fileID: 46471535}
-  characterController: {fileID: 1461514459}
-  MoveSpeed: 3000
-  JumpSpeed: 50
+  CameraTransform: {fileID: 0}
+  characterController: {fileID: 0}
+  MoveSpeed: 5000
+  RotationSpeed: 1000
   Gravity: -150
   YVelocity: 0
   Sensitivity: 1000
@@ -65441,6 +65424,36 @@ MonoBehaviour:
   m_DefaultActionMap: PlayerActions
   m_SplitScreenIndex: -1
   m_Camera: {fileID: 0}
+--- !u!54 &1461514464
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1461514458}
+  serializedVersion: 2
+  m_Mass: 1
+  m_Drag: 2
+  m_AngularDrag: 9
+  m_UseGravity: 0
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 68
+  m_CollisionDetection: 0
+--- !u!136 &1461514465
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1461514458}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  m_Radius: 0.5
+  m_Height: 8
+  m_Direction: 1
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &1463783022
 GameObject:
   m_ObjectHideFlags: 0

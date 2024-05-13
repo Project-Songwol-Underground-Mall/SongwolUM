@@ -81,67 +81,12 @@
                     "isPartOfComposite": true
                 },
                 {
-                    "name": "WASD(VR)",
-                    "id": "906f6c66-9588-4a0e-86ef-ea593ffaf8a2",
-                    "path": "2DVector",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "Move",
-                    "isComposite": true,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "up",
-                    "id": "270ef2cc-eb41-43fd-9ea4-b17f23beb7a5",
-                    "path": "<XRInputV1::Oculus::OculusTouchControllerRight>/thumbstick/up",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "Move",
-                    "isComposite": false,
-                    "isPartOfComposite": true
-                },
-                {
-                    "name": "down",
-                    "id": "f002f0ec-9aa4-4a54-b014-ad9513c8ef08",
-                    "path": "<XRInputV1::Oculus::OculusTouchControllerRight>/thumbstick/down",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "Move",
-                    "isComposite": false,
-                    "isPartOfComposite": true
-                },
-                {
-                    "name": "left",
-                    "id": "d84bcc76-619b-4b14-a2aa-bf4b1649ab67",
-                    "path": "<XRInputV1::Oculus::OculusTouchControllerRight>/thumbstick/left",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "Move",
-                    "isComposite": false,
-                    "isPartOfComposite": true
-                },
-                {
-                    "name": "right",
-                    "id": "e2040e10-97a5-4668-889f-0af0971b6975",
-                    "path": "<XRInputV1::Oculus::OculusTouchControllerRight>/thumbstick/right",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "Move",
-                    "isComposite": false,
-                    "isPartOfComposite": true
-                },
-                {
                     "name": "",
                     "id": "25c8b9d2-8c2c-443d-9d9a-6ccff7822ba8",
-                    "path": "<OculusTrackingReference>/devicePosition",
+                    "path": "<Gamepad>/rightStick",
                     "interactions": "",
                     "processors": "",
-                    "groups": "PC;VR",
+                    "groups": "PC",
                     "action": "Look",
                     "isComposite": false,
                     "isPartOfComposite": false
@@ -152,7 +97,7 @@
                     "path": "<Pointer>/delta",
                     "interactions": "",
                     "processors": "",
-                    "groups": "PC;VR",
+                    "groups": "PC",
                     "action": "Look",
                     "isComposite": false,
                     "isPartOfComposite": false
@@ -160,10 +105,10 @@
                 {
                     "name": "",
                     "id": "a95e514e-8b09-4f72-9b5b-a742484b8e3c",
-                    "path": "<TrackedDevice>/{CenterEyeAngularVelocity}",
+                    "path": "<Joystick>/{Hatswitch}",
                     "interactions": "",
                     "processors": "",
-                    "groups": "VR;PC",
+                    "groups": "PC",
                     "action": "Look",
                     "isComposite": false,
                     "isPartOfComposite": false
@@ -183,22 +128,6 @@
                 },
                 {
                     "devicePath": "<Keyboard>",
-                    "isOptional": false,
-                    "isOR": false
-                }
-            ]
-        },
-        {
-            "name": "VR",
-            "bindingGroup": "VR",
-            "devices": [
-                {
-                    "devicePath": "<XRController>",
-                    "isOptional": false,
-                    "isOR": false
-                },
-                {
-                    "devicePath": "<XRHMD>",
                     "isOptional": false,
                     "isOR": false
                 }

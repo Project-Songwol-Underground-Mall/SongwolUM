@@ -65559,7 +65559,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   CameraTransform: {fileID: 0}
-  MoveSpeed: 50000
+  MoveSpeed: 5000
   RotationSpeed: 500
 --- !u!114 &1461514462
 MonoBehaviour:
@@ -65601,7 +65601,7 @@ MonoBehaviour:
       m_Calls: []
   m_ActionEvents: []
   m_NeverAutoSwitchControlSchemes: 0
-  m_DefaultControlScheme: 
+  m_DefaultControlScheme: VR
   m_DefaultActionMap: PlayerActions
   m_SplitScreenIndex: -1
   m_Camera: {fileID: 0}

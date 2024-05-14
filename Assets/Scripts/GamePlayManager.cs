@@ -5,6 +5,8 @@ using UnityEngine;
 public class GamePlayManager : MonoBehaviour
 {
     public GameObject SpawnManager;
+    public GameObject StageInfoPlane;
+    public Material[] StageInfoMaterial = new Material[5];
     public bool CanTeleport = true;
 
     int CurrentStage = 0; // 현재 구역 번호
@@ -29,7 +31,7 @@ public class GamePlayManager : MonoBehaviour
         if ((IsFront && IsNormalStage) || (!IsFront && !IsNormalStage))
         {
             CurrentStage++;
-            if (CurrentStage == 5)
+            if (CurrentStage == 4)
             {
                 EndGame();
             }
@@ -46,12 +48,13 @@ public class GamePlayManager : MonoBehaviour
             Debug.Log("오답!");
             GetRandomStage(CurrentStage, false); // 오답
         }
+        ChangePlaneMaterial();
     }
 
 
     void GetRandomStage(int StageNumber, bool IsCorrectDirection)// 스테이지 변경에 따른 스테이지 및 이상현상 랜덤 추첨
     {
-        
+
 
         if (!IsCorrectDirection)
         {
@@ -96,6 +99,16 @@ public class GamePlayManager : MonoBehaviour
         // 대신 그러면 이상현상 발생 오브젝트의 이전 버전은 지워주고, 이전에 발생한 이상현상 오브젝트도 지워주고 정상버전으로 다시 Spawn하는 수고가 필요하다.
     }
 
+    void ChangePlaneMaterial()
+    {
+        Renderer SIPRenderer = StageInfoPlane.GetComponent<Renderer>();
+
+        if (SIPRenderer != null)
+        {
+            SIPRenderer.material = StageInfoMaterial[CurrentStage];
+        }
+    }
+
     public void ResetTeleport()
     {
         Debug.Log("5초 후 CanTeleport 리셋");
@@ -104,6 +117,6 @@ public class GamePlayManager : MonoBehaviour
 
     void EndGame()
     {
-        Debug.Log("게임 승리!");
+        Debug.Log("마지막 구역인 4번 구역에서는, 엘레베이터를 타고 올라가야 한다.");
     }
 }

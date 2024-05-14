@@ -1,5 +1,8 @@
 {
   "dependencies": {
+    "com.meta.xr.sdk.core": "64.0.0",
+    "com.meta.xr.sdk.interaction": "64.0.0",
+    "com.meta.xr.sdk.interaction.ovr": "64.0.0",
     "com.unity.animation.rigging": "1.1.1",
     "com.unity.burst": "1.8.14",
     "com.unity.collab-proxy": "2.3.1",

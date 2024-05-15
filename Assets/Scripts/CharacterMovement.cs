@@ -35,14 +35,15 @@ public class CharacterMovement : MonoBehaviour
 
     void Update()
     {
-        // Update RotationValue based on CEA's rotation
-        Vector3 localRotation = CEA.localRotation.eulerAngles;
+        //Vector3 localRotation = CEA.localRotation.eulerAngles;
+        //Vector3 newRotation = new Vector3(localRotation.x, localRotation.y, 0);
+        //transform.rotation = Quaternion.Euler(newRotation);
+        //CEA.rotation = Quaternion.Euler(new Vector3(0, 0, 0));
+        // if (35f < localRotation.x && localRotation.x < 180f) localRotation.x = 35f;
+        // if (180f < localRotation.x && localRotation.x < 330f) localRotation.x = 330f;
 
-        // Ignore Z axis rotation from CEA
-        Vector3 newRotation = new Vector3(localRotation.x, localRotation.y, 0);
+        CEA.position = transform.position;
 
-        // Update GameObject's rotation to match CEA's rotation without Z axis rotation
-        transform.rotation = Quaternion.Euler(newRotation);
 
         if (RB != null) 
         {
@@ -50,12 +51,5 @@ public class CharacterMovement : MonoBehaviour
             RB.velocity = transform.TransformDirection(LocalVelocity);
             // RB.AddRelativeTorque(-RotationValue.y * Time.deltaTime, RotationValue.x * Time.deltaTime, 0);
         }
-
-        // 플레이어(에 종속되어있는 카메라)의 z축 rotation 고정, x축 로테이션 범위 제한
-        Vector3 currentRotation = transform.eulerAngles;
-        currentRotation.z = 0f;
-        if (35f < currentRotation.x && currentRotation.x < 180f) currentRotation.x = 35f;
-        if (180f < currentRotation.x && currentRotation.x < 330f) currentRotation.x = 330f;
-        transform.eulerAngles = currentRotation;
     }
 }

@@ -49,6 +49,7 @@ public class GamePlayManager : MonoBehaviour
         {
             CurrentStage = 0;
             Debug.Log("오답!");
+            ElevatorDoor.SetActive(true);
             GetRandomStage(CurrentStage, false); // 오답
         }
         ChangePlaneMaterial();

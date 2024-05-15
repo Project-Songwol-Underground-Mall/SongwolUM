@@ -7,7 +7,6 @@ public class TeleportZone : MonoBehaviour
 
     public GameObject Player;
     public GameObject GuideBoard;
-    public Rigidbody RB;
     public Transform Destination;
     public bool IsFront;
     public float CoolDown = 5f;
@@ -31,7 +30,7 @@ public class TeleportZone : MonoBehaviour
             Destroy(GuideBoard);
         }
 
-        // Debug.Log("텔레포트 영역 중심 기준으로 얼마나 떨어져 있는가 : " + transform.position - other.transform.position);
+        Debug.Log("충돌한 오브젝트 이름 : " + other.name);
         if (other.CompareTag("Player") && CheckCanTeleport())
         {
             Vector3 PlayerPosition = other.transform.position;

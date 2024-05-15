@@ -18,7 +18,7 @@ public class PhenomenonManagement : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+        SetPhenomenon(0, true);
     }
 
     // Update is called once per frame
@@ -27,7 +27,12 @@ public class PhenomenonManagement : MonoBehaviour
         
     }
 
-    public void SpawnPhenomenon(int PhenomenonNumber, bool isNormal)
+    public void DestroyPhenomenon()
+    {
+        
+    }
+
+    public void SetPhenomenon(int PhenomenonNumber, bool isNormal)
     {
         // isNormal이 true일 때에는 모든 스포너가 정상 버전의 오브젝트를 소환한다.
         // isNormal이 false, 즉 이상현상 스테이지일 때는 PhenomenonNumber에 해당하는 스포너만 이상현상 버전의 오브젝트를 스폰한다.
@@ -36,8 +41,8 @@ public class PhenomenonManagement : MonoBehaviour
         for (int i = 0; i < PhenomenonSpawner.Length; i++)
         {
             // 스폰은 세현이가 인스펙터에 오브젝트 다 넣으면 주석 풀기
-            //if (i == PhenomenonNumber && !isNormal) Spawn(i, false);
-            //else Spawn(i, true);
+            if (i == PhenomenonNumber && !isNormal) Spawn(i, false);
+            else Spawn(i, true);
         }
 
     }
@@ -46,15 +51,14 @@ public class PhenomenonManagement : MonoBehaviour
     {
         if (isNormal)
         {
-            Instantiate(PhenomenonSpawner[PhenomenonNumber].PhenomenonArray[1],
-                PhenomenonSpawner[PhenomenonNumber].PhenomenonArray[0].transform.position,
-                PhenomenonSpawner[PhenomenonNumber].PhenomenonArray[0].transform.rotation);
+            PhenomenonSpawner[PhenomenonNumber].PhenomenonArray[1].SetActive(true);
+            PhenomenonSpawner[PhenomenonNumber].PhenomenonArray[2].SetActive(false);
+
         }
         else
         {
-            Instantiate(PhenomenonSpawner[PhenomenonNumber].PhenomenonArray[2],
-                PhenomenonSpawner[PhenomenonNumber].PhenomenonArray[0].transform.position,
-                PhenomenonSpawner[PhenomenonNumber].PhenomenonArray[0].transform.rotation);
+            PhenomenonSpawner[PhenomenonNumber].PhenomenonArray[1].SetActive(false);
+            PhenomenonSpawner[PhenomenonNumber].PhenomenonArray[2].SetActive(true);
         }
 
     }

@@ -6,6 +6,7 @@ using UnityEngine;
 public class CharacterMovement : MonoBehaviour
 {
     public Transform CameraTransform;
+    public Transform CEA;
 
     public float MoveSpeed; // 이동 속도
     public float RotationSpeed; // 회전 속도
@@ -26,29 +27,29 @@ public class CharacterMovement : MonoBehaviour
         MoveValue = value.Get<Vector2>() * MoveSpeed;
     }
 
-    public void OnLook(InputValue value)
-    {
-        RotationValue = value.Get<Vector2>() * RotationSpeed;
-    }
+    //public void OnLook(InputValue value)
+    //{
+    //    Vector3 localRotation = CEA.localRotation.eulerAngles;
+    //    RotationValue = new Vector2(-localRotation.x, localRotation.y);
+    //}
 
     void Update()
     {
+        //Vector3 localRotation = CEA.localRotation.eulerAngles;
+        //Vector3 newRotation = new Vector3(localRotation.x, localRotation.y, 0);
+        //transform.rotation = Quaternion.Euler(newRotation);
+        //CEA.rotation = Quaternion.Euler(new Vector3(0, 0, 0));
+        // if (35f < localRotation.x && localRotation.x < 180f) localRotation.x = 35f;
+        // if (180f < localRotation.x && localRotation.x < 330f) localRotation.x = 330f;
+
+        CEA.position = transform.position;
+
+
         if (RB != null) 
         {
-            //RB.velocity = new Vector3(MoveValue.x * Time.deltaTime, 0, MoveValue.y * Time.deltaTime);
-            //Vector3 LocalVelocity = transform.InverseTransformDirection(RB.velocity);
-            //LocalVelocity.x = MoveValue.x * Time.deltaTime;
-            //LocalVelocity.z = MoveValue.y * Time.deltaTime;
             Vector3 LocalVelocity = new Vector3(MoveValue.x * Time.deltaTime, 0, MoveValue.y * Time.deltaTime);
             RB.velocity = transform.TransformDirection(LocalVelocity);
-            RB.AddRelativeTorque(-RotationValue.y * Time.deltaTime, RotationValue.x * Time.deltaTime, 0);
+            // RB.AddRelativeTorque(-RotationValue.y * Time.deltaTime, RotationValue.x * Time.deltaTime, 0);
         }
-
-        // 플레이어(에 종속되어있는 카메라)의 z축 rotation 고정, x축 로테이션 범위 제한
-        Vector3 currentRotation = transform.eulerAngles;
-        currentRotation.z = 0f;
-        if (35f < currentRotation.x && currentRotation.x < 180f) currentRotation.x = 35f;
-        if (180f < currentRotation.x && currentRotation.x < 330f) currentRotation.x = 330f;
-        transform.eulerAngles = currentRotation;
     }
 }

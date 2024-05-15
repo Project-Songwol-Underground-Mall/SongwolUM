@@ -17,7 +17,7 @@
                 {
                     "name": "Look",
                     "type": "Value",
-                    "id": "05808d6e-4d9b-4806-811a-a28c20c043e0",
+                    "id": "1e554a0c-16d1-4cee-904f-10cf09fa34cb",
                     "expectedControlType": "Vector3",
                     "processors": "",
                     "interactions": "",
@@ -97,7 +97,7 @@
                     "path": "<XRInputV1::Oculus::OculusTouchControllerRight>/thumbstick/up",
                     "interactions": "",
                     "processors": "",
-                    "groups": "",
+                    "groups": "VR",
                     "action": "Move",
                     "isComposite": false,
                     "isPartOfComposite": true
@@ -108,7 +108,7 @@
                     "path": "<XRInputV1::Oculus::OculusTouchControllerRight>/thumbstick/down",
                     "interactions": "",
                     "processors": "",
-                    "groups": "",
+                    "groups": "VR",
                     "action": "Move",
                     "isComposite": false,
                     "isPartOfComposite": true
@@ -119,7 +119,7 @@
                     "path": "<XRInputV1::Oculus::OculusTouchControllerRight>/thumbstick/left",
                     "interactions": "",
                     "processors": "",
-                    "groups": "",
+                    "groups": "VR",
                     "action": "Move",
                     "isComposite": false,
                     "isPartOfComposite": true
@@ -130,40 +130,29 @@
                     "path": "<XRInputV1::Oculus::OculusTouchControllerRight>/thumbstick/right",
                     "interactions": "",
                     "processors": "",
-                    "groups": "",
+                    "groups": "VR",
                     "action": "Move",
                     "isComposite": false,
                     "isPartOfComposite": true
                 },
                 {
                     "name": "",
-                    "id": "25c8b9d2-8c2c-443d-9d9a-6ccff7822ba8",
-                    "path": "<OculusTrackingReference>/devicePosition",
+                    "id": "4ec07f6f-bb60-4cf8-b927-7ac667659ce0",
+                    "path": "<XRHMD>/centerEyeRotation",
                     "interactions": "",
                     "processors": "",
-                    "groups": "PC;VR",
+                    "groups": "VR",
                     "action": "Look",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
                 {
                     "name": "",
-                    "id": "13a9bee0-4335-4866-95e4-e78d9535c416",
-                    "path": "<Pointer>/delta",
+                    "id": "e4b510e8-588b-4cc8-84f7-9634d05a6ee8",
+                    "path": "<HandheldARInputDevice>/deviceRotation",
                     "interactions": "",
                     "processors": "",
-                    "groups": "PC;VR",
-                    "action": "Look",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "a95e514e-8b09-4f72-9b5b-a742484b8e3c",
-                    "path": "<TrackedDevice>/{CenterEyeAngularVelocity}",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "VR;PC",
+                    "groups": "VR",
                     "action": "Look",
                     "isComposite": false,
                     "isPartOfComposite": false

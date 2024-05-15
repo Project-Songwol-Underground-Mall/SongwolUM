@@ -6,11 +6,13 @@ public class GamePlayManager : MonoBehaviour
 {
     public GameObject SpawnManager;
     public GameObject StageInfoPlane;
+    public GameObject ElevatorDoor;
     public Material[] StageInfoMaterial = new Material[5];
     public bool CanTeleport = true;
 
     int CurrentStage = 0; // 현재 구역 번호
     bool IsNormalStage = true; // 스테이지의 정상 및 이상현상 여부
+    int PrevAbnormalNumber = -1;
     int AbnormalNumber = -1; // 이상현상 스테이지에서 발생시킬 이상현상 번호
     bool[] IsAbnormalOccured = new bool[20]; // 이상현상 번호에 따른 발생 여부
 
@@ -33,7 +35,8 @@ public class GamePlayManager : MonoBehaviour
             CurrentStage++;
             if (CurrentStage == 4)
             {
-                EndGame();
+                ElevatorDoor.SetActive(false);
+                // EndGame();
             }
             else
             {
@@ -46,6 +49,7 @@ public class GamePlayManager : MonoBehaviour
         {
             CurrentStage = 0;
             Debug.Log("오답!");
+            ElevatorDoor.SetActive(true);
             GetRandomStage(CurrentStage, false); // 오답
         }
         ChangePlaneMaterial();
@@ -91,7 +95,7 @@ public class GamePlayManager : MonoBehaviour
             IsNormalStage = false;
         }
         // 여기서 추첨 결과로 나온 번호의 오브젝트의 이상현상 발생 Version을 Spawn해줘야 한다.
-        SpawnManager.GetComponent<PhenomenonManagement>().SpawnPhenomenon(AbnormalNumber, IsNormalStage);
+        SpawnManager.GetComponent<PhenomenonManagement>().SetPhenomenon(AbnormalNumber, IsNormalStage);
 
 
 

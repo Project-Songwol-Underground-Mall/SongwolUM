@@ -9,7 +9,7 @@ public class TeleportZone : MonoBehaviour
     public GameObject GuideBoard;
     public Transform Destination;
     public bool IsFront;
-    public float CoolDown = 5f;
+    public float CoolDown = 3f;
 
     // Start is called before the first frame update
     void Start()

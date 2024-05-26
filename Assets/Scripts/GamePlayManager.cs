@@ -5,7 +5,6 @@ using UnityEngine;
 public class GamePlayManager : MonoBehaviour
 {
     public GameObject SpawnManager;
-    public GameObject StageInfoPlane;
     public GameObject ElevatorDoor;
     public bool CanTeleport = true;
 
@@ -27,16 +26,22 @@ public class GamePlayManager : MonoBehaviour
 
     int NumOfCorrectAnswer = 0; // 현재 맞춘 정답 개수
     int[,] ExperimentAPArray = new int[2, 5]; // 스테이지별 등장시킬 이상현상 번호 or 일반 스테이지
-    public Material[] PrevStageResultMaterial = new Material[2];
-    public Material[] StageInfoMaterial = new Material[14];
-    public Material[] NumOfCorrectAnswerMaterial = new Material[11];
 
+
+    public GameObject StageInfoPanel;
+    public GameObject PrevStageResultPanel;
+    public GameObject NumOfCorrectAnswerPanel;
+    public Material[] StageInfoMaterial = new Material[14];
+    public Material[] PrevStageResultMaterial = new Material[2];
+    public Material[] NumOfCorrectAnswerMaterial = new Material[11];
 
 
     // Start is called before the first frame update
     void Start()
     {
         LotteryPhenomenon();
+        PrevStageResultPanel.setActive(false);
+        NumOfCorrectAnswerPanel.setActive(false);
         Debug.Log("맨 처음 스테이지는 일반 스테이지입니다.");
     }
 
@@ -49,11 +54,10 @@ public class GamePlayManager : MonoBehaviour
     public void ChangeStage(bool IsFront) // 앞으로 전진 혹은 뒤로 돌아갔을 시 스테이지 증가 및 정답여부 판별
     {
         CurrentStage++;
-
         if ((IsFront && IsNormalStage) || (!IsFront && !IsNormalStage))
         {
             NumOfCorrectAnswer++;
-            if (CurrentStage == 17)
+            if (CurrentStage == 12)
             {
                 ElevatorDoor.SetActive(false);
                 EndGame();
@@ -62,7 +66,8 @@ public class GamePlayManager : MonoBehaviour
             {
                 Debug.Log("정답!");
                 // GetRandomStage(CurrentStage, true);
-                GetNextStage(CurrentStage, true); // 정답을 맞춤
+                GetNextStage(CurrentStage - 1, true);
+                ChangePSRPanel(true);
             }
         }
 
@@ -71,9 +76,11 @@ public class GamePlayManager : MonoBehaviour
             Debug.Log("오답!");
             ElevatorDoor.SetActive(true);
             // GetRandomStage(CurrentStage, false);
-            GetNextStage(CurrentStage, false); // 오답
+            GetNextStage(CurrentStage - 1, false);
+            ChangePSRPanel(false);
         }
-        ChangePlaneMaterial();
+        ChangeStageInfoPanel();
+        ChangeNOCAPanel();
     }
 
     void GetRandomStage(int StageNumber, bool IsCorrectDirection)// 스테이지 변경에 따른 스테이지 및 이상현상 랜덤 추첨
@@ -121,16 +128,6 @@ public class GamePlayManager : MonoBehaviour
 
         // 이상현상 Version의 오브젝트를 제외한 나머지 오브젝트를 스폰해준다. 스폰해두고 남겨놓는 방법도 고려중.
         // 대신 그러면 이상현상 발생 오브젝트의 이전 버전은 지워주고, 이전에 발생한 이상현상 오브젝트도 지워주고 정상버전으로 다시 Spawn하는 수고가 필요하다.
-    }
-
-    void ChangePlaneMaterial()
-    {
-        Renderer SIPRenderer = StageInfoPlane.GetComponent<Renderer>();
-
-        if (SIPRenderer != null)
-        {
-            SIPRenderer.material = StageInfoMaterial[CurrentStage];
-        }
     }
 
     public void ResetTeleport()
@@ -208,5 +205,49 @@ public class GamePlayManager : MonoBehaviour
 
         // 여기서 현재 스테이지 번호에 맞는 이상현상 발생 Version 오브젝트를 Spawn해줘야 한다.
         SpawnManager.GetComponent<PhenomenonManagement>().SetPhenomenon(APNumber, IsNormalStage);
+    }
+
+    void ChangeStageInfoPanel()
+    {
+        Renderer SIPRenderer = StageInfoPanel.GetComponent<Renderer>();
+
+        if (SIPRenderer != null)
+        {
+            SIPRenderer.material = StageInfoMaterial[CurrentStage];
+        }
+    }
+
+    void ChangePSRPanel(bool IsCorrect)
+    {
+        if (CurrentStage == 7)
+        {
+            PrevStageResultPanel.setActive(false);
+            return;
+        }
+        else
+        {
+            PrevStageResultPanel.setActive(true);
+        }
+
+        Renderer SIPRenderer = PrevStageResultPanel.GetComponent<Renderer>();
+
+        if (SIPRenderer != null)
+        {
+            if (IsCorrect) SIPRenderer.material = PrevStageResultMaterial[0];
+            else SIPRenderer.material = PrevStageResultMaterial[1];
+        }
+    }
+
+    void ChangeNOCAPanel()
+    {
+        if (CurrentStage != 1) NumOfCorrectAnswerPanel.setActive(true);
+        
+
+        Renderer SIPRenderer = NumOfCorrectAnswerPanel.GetComponent<Renderer>();
+
+        if (SIPRenderer != null)
+        {
+            SIPRenderer.material = NumOfCorrectAnswerMaterial[NumOfCorrectAnswer];
+        }
     }
 }

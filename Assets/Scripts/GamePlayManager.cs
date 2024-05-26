@@ -7,7 +7,6 @@ public class GamePlayManager : MonoBehaviour
     public GameObject SpawnManager;
     public GameObject StageInfoPlane;
     public GameObject ElevatorDoor;
-    public Material[] StageInfoMaterial = new Material[5];
     public bool CanTeleport = true;
 
     int CurrentStage = 0; // 현재 구역 번호
@@ -28,6 +27,9 @@ public class GamePlayManager : MonoBehaviour
 
     int NumOfCorrectAnswer = 0; // 현재 맞춘 정답 개수
     int[,] ExperimentAPArray = new int[2, 5]; // 스테이지별 등장시킬 이상현상 번호 or 일반 스테이지
+    public Material[] PrevStageResultMaterial = new Material[2];
+    public Material[] StageInfoMaterial = new Material[14];
+    public Material[] NumOfCorrectAnswerMaterial = new Material[11];
 
 
 

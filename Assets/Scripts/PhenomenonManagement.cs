@@ -6,6 +6,9 @@ using UnityEngine;
 public class PhenomenonArr
 {
     public GameObject[] PhenomenonArray = new GameObject[3];
+    public bool IsFixedType;
+    // IsFixedType이 true : Spawner를 통한 별도의 작업 불필요, SetActive로 활성화 비활성화만
+    // IsFixedType이 false : Spawner를 통한 Spawn, 별도의 스크립트 작업 필요
 }
 
 public class PhenomenonManagement : MonoBehaviour
@@ -41,11 +44,20 @@ public class PhenomenonManagement : MonoBehaviour
         for (int i = 0; i < PhenomenonSpawner.Length; i++)
         {
             // 스폰은 세현이가 인스펙터에 오브젝트 다 넣으면 주석 풀기
-            if (i == PhenomenonNumber && !isNormal) Spawn(i, false);
-            else Spawn(i, true);
+            if (i == PhenomenonNumber && !isNormal)
+            {
+                if (PhenomenonSpawner[i].IsFixedType) Spawn(i, false);
+                else PhenomenonSpawner[i].PhenomenonArray[0].GetComponent<SpawnManagerDynamicType>().ActivateAP(i, false);
+            }
+            else
+            {
+                if (PhenomenonSpawner[i].IsFixedType) Spawn(i, true);
+                else PhenomenonSpawner[i].PhenomenonArray[0].GetComponent<SpawnManagerDynamicType>().ActivateAP(i, true);
+            }
         }
 
     }
+
 
     public void Spawn(int PhenomenonNumber, bool isNormal)
     {

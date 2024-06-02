@@ -65,7 +65,7 @@ public class GamePlayManager : MonoBehaviour
             {
                 Debug.Log("정답!");
                 // GetRandomStage(CurrentStage, true);
-                GetNextStage(CurrentStage - 1, true);
+                GetNextStage(CurrentStage, true);
                 ChangePSRPanel(true);
             }
         }
@@ -75,7 +75,7 @@ public class GamePlayManager : MonoBehaviour
             Debug.Log("오답!");
             ElevatorDoor.SetActive(true);
             // GetRandomStage(CurrentStage, false);
-            GetNextStage(CurrentStage - 1, false);
+            GetNextStage(CurrentStage, false);
             ChangePSRPanel(false);
         }
         ChangeStageInfoPanel();
@@ -172,11 +172,21 @@ public class GamePlayManager : MonoBehaviour
                 }
                 else j--;
             }
+
+            for (int j = 4; j > 0; j--)
+            {
+                int k = Random.Range(0, j + 1);
+                int temp = ExperimentAPArray[i, j];
+                ExperimentAPArray[i, j] = ExperimentAPArray[i, k];
+                ExperimentAPArray[i, k] = temp;
+            }
+
         }
     }
 
     void GetNextStage(int StageNumber, bool IsCorrectDirection)
     {
+        IsNormalStage = true;
         int APNumber = -1; // 이상현상 번호
         if (StageNumber == 6 || StageNumber == 12) // 실험 사이클 종료후 휴식용 일반 스테이지
         {
@@ -198,6 +208,10 @@ public class GamePlayManager : MonoBehaviour
                 Cycle = 1;
                 Index = StageNumber - 7;
             }
+            Debug.Log("StageNumber : " + StageNumber);
+            Debug.Log("Cycle : " + Cycle + "Index : " + Index);
+            Debug.Log("이상현상 번호(-1이면 일반 스테이지) : " + ExperimentAPArray[Cycle, Index]);
+            if (ExperimentAPArray[Cycle, Index] <= 3 && ExperimentAPArray[Cycle, Index] != -1) Debug.Log("퍼즐 이상현상입니다.");
             APNumber = ExperimentAPArray[Cycle, Index];
             if (APNumber != -1) IsNormalStage = false;
         }

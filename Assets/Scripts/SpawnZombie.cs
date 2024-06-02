@@ -6,7 +6,7 @@ public class SpawnZombie : MonoBehaviour
 {
     public GameObject Player;
     public GameObject Zombie;
-    public float ActivationDistance = 25f; // 스폰 범위
+    public float ActivationDistance = 90f; // 스폰 범위
     bool isZombieSpawned = false;
 
     private void OnEnable()

@@ -6,11 +6,15 @@ public class SpawnManagerDynamicType : MonoBehaviour
 {
     public GameObject Mannequin;
     public GameObject SuitMan;
+    public GameObject CleaningPanel;
+    public GameObject ZombieSpawner;
     public GameObject Zombie;
     public GameObject LightSystem;
     public GameObject Floor;
     public AudioClip SirenSound;
     public AudioClip GhostSound;
+
+    private bool IsCoroutineRunning = false;
     // Start is called before the first frame update
     void Start()
     {
@@ -25,19 +29,20 @@ public class SpawnManagerDynamicType : MonoBehaviour
     
     public void ActivateAP(int PhenomenonNumber, bool isNormal)
     {
-        if (PhenomenonNumber == 6) AnimateMannequin();
-        if (PhenomenonNumber == 7) MoveSuitMan();
-        if (PhenomenonNumber == 8) AnimateMannequin();
-        if (PhenomenonNumber == 9) 
-        if (PhenomenonNumber == 10)
-        if (PhenomenonNumber == 11)
-        if (PhenomenonNumber == 12)
-        if (PhenomenonNumber == 13)
+        if (PhenomenonNumber == 6) AnimateMannequin(isNormal);
+        if (PhenomenonNumber == 7) MoveSuitMan(isNormal);
+        if (PhenomenonNumber == 8) SpawnZombie(isNormal);
+        if (PhenomenonNumber == 9) TurnOffLight(isNormal);
+        if (PhenomenonNumber == 10) Emergency(isNormal);
+        if (PhenomenonNumber == 11) ComeUpFloor(isNormal);
+        if (PhenomenonNumber == 12) PlayGhostSound(isNormal);   
     }
 
+    // 움직이는 마네킹 이상현상
     public void AnimateMannequin(bool isNormal)
     {
-        ActiveteMannequin AM = Manenequin.GetComponent<ActivateMannequin>();
+        ActivateMannequin AM = Mannequin.GetComponent<ActivateMannequin>();
+        // 마네킹에 달려 있는 ActivateMannequin 스크립트를 활성화
         if (AM != null)
         {
             if (!isNormal) AM.enabled = true;
@@ -45,33 +50,122 @@ public class SpawnManagerDynamicType : MonoBehaviour
         }
     }
 
+    // 정장남성 이상현상
     public void MoveSuitMan(bool isNormal)
     {
-
+        if (isNormal)
+        {
+            SuitMan.SetActive(false);
+        }
+        else
+        {
+            SuitMan.SetActive(true);
+        }
     }
 
-    public void SpawnAndMoveZombie(bool isNormal)
+    // 플레이어가 화장실 앞에 도달했을 때 좀비가 스폰되는 이상현상
+    public void SpawnZombie(bool isNormal)
     {
-
+        if (isNormal)
+        {
+            ZombieSpawner.SetActive(false);
+            CleaningPanel.SetActive(true);
+        }
+        else
+        {
+            ZombieSpawner.SetActive(true);
+            CleaningPanel.SetActive(false);
+        }
     }
 
+    // 조명이 꺼졌다가 켜지는 이상현상
     public void TurnOffLight(bool isNormal)
     {
+        if (isNormal)
+        {
 
+        }
+        else
+        {
+
+        }
     }
 
+    // 조명이 붉게 변하고 사이렌 소리가 들리는 이상현상
     public void Emergency(bool isNormal)
     {
+        if (isNormal)
+        {
 
+        }
+        else
+        {
+
+        }
     }
 
+    // 바닥이 올라오는 이상현상
     public void ComeUpFloor(bool isNormal)
     {
+        if (!isNormal)
+        {
+            if (!IsCoroutineRunning)
+            {
+                StartCoroutine(MoveFloorUp());
+            }
+        }
+        else
+        {
+            if (!IsCoroutineRunning)
+            {
+                StartCoroutine(MoveFloorDown());
+            }
+        }
+    }
+    // 으스스한 귀신 사운드 재생 이상현상
+    public void PlayGhostSound(bool isNormal)
+    {
+        if (isNormal)
+        {
+
+        }
+        else
+        {
+
+        }
+    }
+
+    public void Init()
+    {
 
     }
 
-    public void PlayGhostSound(bool isNormal)
-    {
 
+    IEnumerator MoveFloorUp()
+    {
+        IsCoroutineRunning = true;
+
+        while (Floor.transform.position.y < 3)
+        {
+            Vector3 NewPosition = Floor.transform.position + Vector3.up * Time.deltaTime;
+            Floor.transform.position = NewPosition;
+            yield return null;
+        }
+
+        IsCoroutineRunning = false;
+    }
+
+    IEnumerator MoveFloorDown()
+    {
+        IsCoroutineRunning = true;
+
+        while (Floor.transform.position.y > -5)
+        {
+            Vector3 newPosition = Floor.transform.position + Vector3.down * Time.deltaTime;
+            Floor.transform.position = newPosition;
+            yield return null;
+        }
+
+        IsCoroutineRunning = false;
     }
 }

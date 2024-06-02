@@ -35,13 +35,12 @@ public class GamePlayManager : MonoBehaviour
     public Material[] PrevStageResultMaterial = new Material[2];
     public Material[] NumOfCorrectAnswerMaterial = new Material[11];
 
-
     // Start is called before the first frame update
     void Start()
     {
         LotteryPhenomenon();
-        PrevStageResultPanel.setActive(false);
-        NumOfCorrectAnswerPanel.setActive(false);
+        PrevStageResultPanel.SetActive(false);
+        NumOfCorrectAnswerPanel.SetActive(false);
         Debug.Log("맨 처음 스테이지는 일반 스테이지입니다.");
     }
 
@@ -65,7 +64,7 @@ public class GamePlayManager : MonoBehaviour
             else
             {
                 Debug.Log("정답!");
-                // GetRandomStage(CurrentStage, true);
+                GetRandomStage(CurrentStage, true);
                 GetNextStage(CurrentStage - 1, true);
                 ChangePSRPanel(true);
             }
@@ -75,7 +74,7 @@ public class GamePlayManager : MonoBehaviour
         {
             Debug.Log("오답!");
             ElevatorDoor.SetActive(true);
-            // GetRandomStage(CurrentStage, false);
+            GetRandomStage(CurrentStage, false);
             GetNextStage(CurrentStage - 1, false);
             ChangePSRPanel(false);
         }
@@ -189,9 +188,9 @@ public class GamePlayManager : MonoBehaviour
         else
         {
             int Cycle = 0, Index = 0;
-            if (StageNumber < 6) 
-            { 
-                Index = StageNumber - 1; 
+            if (StageNumber < 6)
+            {
+                Index = StageNumber - 1;
             }
 
             if (6 < StageNumber && StageNumber < 12)
@@ -221,12 +220,12 @@ public class GamePlayManager : MonoBehaviour
     {
         if (CurrentStage == 7)
         {
-            PrevStageResultPanel.setActive(false);
+            PrevStageResultPanel.SetActive(false);
             return;
         }
         else
         {
-            PrevStageResultPanel.setActive(true);
+            PrevStageResultPanel.SetActive(true);
         }
 
         Renderer SIPRenderer = PrevStageResultPanel.GetComponent<Renderer>();
@@ -240,8 +239,8 @@ public class GamePlayManager : MonoBehaviour
 
     void ChangeNOCAPanel()
     {
-        if (CurrentStage != 1) NumOfCorrectAnswerPanel.setActive(true);
-        
+        if (CurrentStage != 1) NumOfCorrectAnswerPanel.SetActive(true);
+
 
         Renderer SIPRenderer = NumOfCorrectAnswerPanel.GetComponent<Renderer>();
 

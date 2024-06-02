@@ -64,7 +64,7 @@ public class GamePlayManager : MonoBehaviour
             else
             {
                 Debug.Log("정답!");
-                GetRandomStage(CurrentStage, true);
+                // GetRandomStage(CurrentStage, true);
                 GetNextStage(CurrentStage - 1, true);
                 ChangePSRPanel(true);
             }
@@ -74,7 +74,7 @@ public class GamePlayManager : MonoBehaviour
         {
             Debug.Log("오답!");
             ElevatorDoor.SetActive(true);
-            GetRandomStage(CurrentStage, false);
+            // GetRandomStage(CurrentStage, false);
             GetNextStage(CurrentStage - 1, false);
             ChangePSRPanel(false);
         }

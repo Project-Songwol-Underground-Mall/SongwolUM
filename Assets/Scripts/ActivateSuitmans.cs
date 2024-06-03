@@ -8,7 +8,7 @@ public class ActivateSuitmans : MonoBehaviour
     public GameObject[] SuitMans = new GameObject[5];
     bool isAnimationActivated = false;
     private Animator[] SuitManAnimators = new Animator[5];
-    private float ActivationDistance = 50f; // 애니메이션 작동 범위
+    private float ActivationDistance = 60f; // 애니메이션 작동 범위
     private float MoveDistance = 40f; // 정장남 이동 거리
     // Start is called before the first frame update
     void Start()

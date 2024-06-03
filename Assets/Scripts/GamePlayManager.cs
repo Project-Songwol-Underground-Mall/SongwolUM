@@ -27,7 +27,7 @@ public class GamePlayManager : MonoBehaviour
     int NumOfCorrectAnswer = 0; // 현재 맞춘 정답 개수
     int[,] ExperimentAPArray = new int[2, 5]; // 스테이지별 등장시킬 이상현상 번호 or 일반 스테이지
 
-
+    public GameObject SafetyAlarmBoard;
     public GameObject StageInfoPanel;
     public GameObject PrevStageResultPanel;
     public GameObject NumOfCorrectAnswerPanel;
@@ -41,6 +41,7 @@ public class GamePlayManager : MonoBehaviour
         LotteryPhenomenon();
         PrevStageResultPanel.SetActive(false);
         NumOfCorrectAnswerPanel.SetActive(false);
+        SafetyAlarmBoard.SetActive(false);
         Debug.Log("맨 처음 스테이지는 일반 스테이지입니다.");
     }
 
@@ -56,7 +57,19 @@ public class GamePlayManager : MonoBehaviour
         if ((IsFront && IsNormalStage) || (!IsFront && !IsNormalStage))
         {
             NumOfCorrectAnswer++;
-            if (CurrentStage == 1 || CurrentStage == 7) NumOfCorrectAnswer--;
+            if (CurrentStage == 1) NumOfCorrectAnswer--;
+            if (CurrentStage == 6)
+            {
+                SafetyAlarmBoard.SetActive(true);
+                Debug.Log("안전알람 보드가 보여야돼요");
+            }
+            if (CurrentStage == 7)
+            {
+                NumOfCorrectAnswer--;
+                SafetyAlarmBoard.SetActive(false);
+            }
+            
+
 
             if (CurrentStage == 12)
             {

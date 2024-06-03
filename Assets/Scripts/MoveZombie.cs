@@ -4,11 +4,12 @@ using UnityEngine;
 
 public class MoveZombie : MonoBehaviour
 {
-    private float Speed = 25f; // 이동 속도
+    private float Speed = 50f; // 이동 속도
 
     void Start()
     {
-
+        // 5초 뒤 삭제
+        Destroy(gameObject, 5f);
     }
 
     void Update()

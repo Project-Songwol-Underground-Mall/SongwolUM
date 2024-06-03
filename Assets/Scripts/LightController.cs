@@ -6,7 +6,7 @@ public class LightController : MonoBehaviour
 {
     public GameObject Player;
 
-    public GameObject spawnManager;
+    public GameObject SMDT;
     public GameObject[] squareLights = new GameObject[12];
 
     private int phenomenonNumber;
@@ -19,7 +19,7 @@ public class LightController : MonoBehaviour
 
     private void OnEnable()
     {
-        SpawnManagerDynamicType spawnManagerScript = spawnManager.GetComponent<SpawnManagerDynamicType>();
+        SpawnManagerDynamicType spawnManagerScript = SMDT.GetComponent<SpawnManagerDynamicType>();
         phenomenonNumber = spawnManagerScript.GetPhenomenonNumber();
         Debug.Log("Phenomenon Number: " + phenomenonNumber);
     }

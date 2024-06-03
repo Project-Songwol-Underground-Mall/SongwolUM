@@ -15,6 +15,7 @@ public class SpawnManagerDynamicType : MonoBehaviour
     public AudioClip SirenSound;
     public AudioClip GhostSound;
 
+    private int phenomenonNumber = -1;
     private bool IsCoroutineRunning = false;
     // Start is called before the first frame update
     void Start()
@@ -30,6 +31,7 @@ public class SpawnManagerDynamicType : MonoBehaviour
     
     public void ActivateAP(int PhenomenonNumber, bool isNormal)
     {
+        phenomenonNumber = PhenomenonNumber;
         if (PhenomenonNumber == 6) AnimateMannequin(isNormal);
         if (PhenomenonNumber == 7) MoveSuitMan(isNormal);
         if (PhenomenonNumber == 8) SpawnZombie(isNormal);
@@ -84,11 +86,11 @@ public class SpawnManagerDynamicType : MonoBehaviour
     {
         if (isNormal)
         {
-
+            LightSystem.SetActive(true);
         }
         else
         {
-
+            LightSystem.SetActive(false);
         }
     }
 
@@ -97,11 +99,12 @@ public class SpawnManagerDynamicType : MonoBehaviour
     {
         if (isNormal)
         {
+            LightSystem.SetActive(true);
 
         }
         else
         {
-
+            LightSystem.SetActive(false);
         }
     }
 
@@ -134,6 +137,11 @@ public class SpawnManagerDynamicType : MonoBehaviour
         {
 
         }
+    }
+
+    public int GetPhenomenonNumber()
+    {
+        return phenomenonNumber;
     }
 
     public void Init()

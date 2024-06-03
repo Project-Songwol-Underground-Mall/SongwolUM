@@ -184,7 +184,6 @@ public class GamePlayManager : MonoBehaviour
                 ExperimentAPArray[i, j] = ExperimentAPArray[i, k];
                 ExperimentAPArray[i, k] = temp;
             }
-
         }
     }
 

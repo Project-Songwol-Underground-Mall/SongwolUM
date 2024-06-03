@@ -32,12 +32,12 @@ public class ActivateMannequin : MonoBehaviour
                 isAnimationActivated = true;
                 MannequinAnimator.Play("scare_mnq");
 
-                // 5초 후에 상태 변경
+                // 3초 후에 상태 변경
                 StartCoroutine(ChangeStateAfterDelay(3f));
             }
             else
             {
-                Debug.Log("MannequinAnimator가 Null");
+                Debug.Log("MannequinAnimator를 찾을 수 없음");
             }
         }
         else

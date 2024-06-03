@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class SpawnManagerDynamicType : MonoBehaviour
 {
+    public GameObject Player;
     public GameObject Mannequin;
     public GameObject SuitMan;
     public GameObject CleaningPanel;
@@ -11,7 +12,6 @@ public class SpawnManagerDynamicType : MonoBehaviour
     public GameObject Zombie;
     public GameObject LightSystem;
     public GameObject Floor;
-    public GameObject Player;
     public AudioClip SirenSound;
     public AudioClip GhostSound;
 

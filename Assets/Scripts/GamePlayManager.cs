@@ -56,6 +56,8 @@ public class GamePlayManager : MonoBehaviour
         if ((IsFront && IsNormalStage) || (!IsFront && !IsNormalStage))
         {
             NumOfCorrectAnswer++;
+            if (CurrentStage == 1 || CurrentStage == 7) NumOfCorrectAnswer--;
+
             if (CurrentStage == 12)
             {
                 ElevatorDoor.SetActive(false);
@@ -82,6 +84,7 @@ public class GamePlayManager : MonoBehaviour
         ChangeNOCAPanel();
     }
 
+    /* 아닌 실제 게임 출시 버전에 사용될 함수, VR 실험 버전에는 LotteryPhenomenon()과 GetNextStage()를 사용*/
     void GetRandomStage(int StageNumber, bool IsCorrectDirection)// 스테이지 변경에 따른 스테이지 및 이상현상 랜덤 추첨
     {
 
@@ -140,7 +143,8 @@ public class GamePlayManager : MonoBehaviour
         Debug.Log("게임 종료");
     }
 
-    void LotteryPhenomenon()
+
+    void LotteryPhenomenon() // VR 실험 버전에서 게임 시작 전, 스테이지별 이상현상 유무와 이상현상 종류를 미리 추첨하는 함수
     {
         for (int i = 0; i < 2; i++)
         {

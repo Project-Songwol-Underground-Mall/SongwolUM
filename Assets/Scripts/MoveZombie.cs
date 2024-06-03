@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class MoveZombie : MonoBehaviour
 {
-    public float Speed = 10f; // 이동 속도
+    private float Speed = 25f; // 이동 속도
 
     void Start()
     {
@@ -13,6 +13,6 @@ public class MoveZombie : MonoBehaviour
 
     void Update()
     {
-        transform.Translate(0, 0, -Speed * Time.deltaTime);
+        transform.Translate(0, 0, Speed * Time.deltaTime);
     }
 }

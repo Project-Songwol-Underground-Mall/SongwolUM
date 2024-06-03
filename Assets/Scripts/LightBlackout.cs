@@ -4,10 +4,6 @@ using UnityEngine;
 
 public class LightBlackout : MonoBehaviour
 {
-    public int PhenomenonNumber;
-
-    public GameObject Player;
-
     public Light spotLight;
     public Light pointLight;
 
@@ -33,14 +29,18 @@ public class LightBlackout : MonoBehaviour
     }
     private void OnEnable()
     {
-        
+
     }
     // Update is called once per frame
     void Update()
     {
-        //TODO: 이상현상 번호 9번일 때 작동되도록 해야 함.
         //TODO: 플레이어 위치가 어디에 도착했을 때 정전
-        
+
+    }
+
+    public void StartBlackout()
+    {
+        StartCoroutine(BlinkLights());
     }
 
     IEnumerator BlinkLights()
@@ -83,3 +83,4 @@ public class LightBlackout : MonoBehaviour
         }
 
     }
+}

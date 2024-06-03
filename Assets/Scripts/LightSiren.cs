@@ -4,10 +4,8 @@ using UnityEngine;
 
 public class LightSiren : MonoBehaviour
 {
-    public int PhenomenonNumber;    //TODO: 나중에 오브젝트 끌고 와서 바꾸기
-
-    private Light spotLight;
-    private Light pointLight;
+    public Light spotLight;
+    public Light pointLight;
     
     // 초기 조명 색상을 저장하기 위한 변수
     private Color originalSpotColor;
@@ -40,10 +38,10 @@ public class LightSiren : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        // TODO: PhenomenonNumber 10번일 때 작동되도록 해야 함.
+
     }
 
-    void ChangeToRedAndPulse()
+    public void ChangeToRedAndPulse()
     {
         // 현재 실행 중인 코루틴이 있으면 중지합니다.
         if (intensityCoroutine != null)

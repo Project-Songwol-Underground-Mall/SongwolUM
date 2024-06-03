@@ -83,7 +83,7 @@ public class SpawnManagerDynamicType : MonoBehaviour
     {
         if (isNormal)
         {
-
+            
         }
         else
         {

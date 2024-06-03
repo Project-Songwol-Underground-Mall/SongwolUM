@@ -4,42 +4,43 @@ using UnityEngine;
 
 public class LightSiren : MonoBehaviour
 {
-    // Spotlight를 연결하기 위한 변수
-    public Light spotLight;
+    public int PhenomenonNumber;    //TODO: 나중에 오브젝트 끌고 와서 바꾸기
 
+    private Light spotLight;
+    private Light pointLight;
+    
     // 초기 조명 색상을 저장하기 위한 변수
-    private Color originalColor;
-    private float originalIntensity;
+    private Color originalSpotColor;
+    private float originalSpotIntensity;
+
+    private Color originalPointColor;
+    private float originalPointIntensity;
+    
     private Coroutine intensityCoroutine;
 
     // Start is called before the first frame update
     void Start()
     {
-        if (spotLight == null)
+        Transform spotLightTransform = transform.Find("Spot Light");
+        if (spotLightTransform != null )
         {
-            spotLight = GetComponent<Light>();
+            spotLight = spotLightTransform.GetComponent<Light>();
+            originalSpotColor = spotLight.color;
+            originalSpotIntensity = spotLight.intensity;
         }
 
-        // 원래 색상과 세기를 저장합니다.
-        originalColor = spotLight.color;
-        originalIntensity = spotLight.intensity;
+        Transform pointLightTransform = transform.Find("Point Light"); //TODO: 오브젝트 이름이 (1) 붙어 있는데 조정
+        {
+            pointLight = pointLightTransform.GetComponent<Light>();
+            originalPointColor = pointLight.color;
+            originalPointIntensity = pointLight.intensity;
+        }
     }
 
     // Update is called once per frame
     void Update()
     {
-
-        // 'F' 키를 눌렀을 때 색상 변경 및 세기 변경 시작
-        if (Input.GetKeyDown(KeyCode.F))
-        {
-            ChangeToRedAndPulse();
-        }
-
-        // 'R' 키를 눌렀을 때 원래 상태로 되돌리기
-        if (Input.GetKeyDown(KeyCode.R))
-        {
-            ResetLight();
-        }
+        // TODO: PhenomenonNumber 10번일 때 작동되도록 해야 함.
     }
 
     void ChangeToRedAndPulse()
@@ -51,7 +52,14 @@ public class LightSiren : MonoBehaviour
         }
 
         // 조명의 색상을 빨간색으로 변경합니다.
-        spotLight.color = Color.red;
+        if (spotLight != null)
+        {
+            spotLight.color = Color.red;
+        }
+        if(pointLight != null)
+        {
+            pointLight.color = Color.red;
+        }
 
         // 조명의 세기를 주기적으로 변경하는 코루틴을 시작합니다.
         intensityCoroutine = StartCoroutine(PulseIntensity());
@@ -65,10 +73,18 @@ public class LightSiren : MonoBehaviour
             StopCoroutine(intensityCoroutine);
             intensityCoroutine = null;
         }
-
-        // 조명의 색상과 세기를 원래 상태로 되돌립니다.
-        spotLight.color = originalColor;
-        spotLight.intensity = originalIntensity;
+        // spotLight & pointLight 조명 색상 및 세기 원래 상태로 되돌립니다.
+        if(spotLight != null)
+        {
+            spotLight.color = originalSpotColor;
+            spotLight.intensity = originalSpotIntensity;
+        }
+        if (pointLight!= null)
+        {
+            pointLight.color = originalPointColor;
+            pointLight.intensity = originalPointIntensity;
+        }
+    
     }
 
     IEnumerator PulseIntensity()
@@ -76,16 +92,32 @@ public class LightSiren : MonoBehaviour
         while (true)
         {
             // 세기를 증가시킵니다.
-            while (spotLight.intensity < 2f)
+            while ((spotLight != null && spotLight.intensity < 2f) ||
+                   (pointLight != null && pointLight.intensity < 2f))
             {
-                spotLight.intensity += Time.deltaTime;
+                if (spotLight != null)
+                {
+                    spotLight.intensity += Time.deltaTime;
+                }
+                if (pointLight != null)
+                {
+                    pointLight.intensity += Time.deltaTime;
+                }
                 yield return null;
             }
 
             // 세기를 감소시킵니다.
-            while (spotLight.intensity > 0.5f)
+            while ((spotLight != null && spotLight.intensity > 0.5f) ||
+                   (pointLight != null && pointLight.intensity > 0.5f))
             {
-                spotLight.intensity -= Time.deltaTime;
+                if (spotLight != null)
+                {
+                    spotLight.intensity -= Time.deltaTime;
+                }
+                if (pointLight != null)
+                {
+                    pointLight.intensity -= Time.deltaTime;
+                }
                 yield return null;
             }
         }

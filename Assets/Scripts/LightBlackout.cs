@@ -4,51 +4,82 @@ using UnityEngine;
 
 public class LightBlackout : MonoBehaviour
 {
+    public int PhenomenonNumber;
+
+    public GameObject Player;
+
     public Light spotLight;
     public Light pointLight;
 
-    private bool isSpotLightOn = true;
-    private bool isPointLightOn = true;
+    public float blinkDuration = 1.0f;
+    public float offDuration = 1.0f;
+
     // Start is called before the first frame update
     void Start()
     {
-        // 스포트라이트와 포인트라이트가 할당되지 않았다면, 현재 게임 오브젝트에서 Light 컴포넌트를 찾아 할당합니다.
-        if (spotLight == null)
+        // 자식 오브젝트 중 이름이 SpotLight인 오브젝트를 찾습니다.
+        Transform spotLightTransform = transform.Find("Spot Light");
+        if (spotLightTransform != null)
         {
-            spotLight = GetComponent<Light>();
+            spotLight = spotLightTransform.GetComponent<Light>();
         }
 
-        if (pointLight == null)
+        // 자식 오브젝트 중 이름이 PointLight인 오브젝트를 찾습니다.
+        Transform pointLightTransform = transform.Find("Point Light");
+        if (pointLightTransform != null)
         {
-            pointLight = GetComponent<Light>();
+            pointLight = pointLightTransform.GetComponent<Light>();
         }
     }
-
+    private void OnEnable()
+    {
+        
+    }
     // Update is called once per frame
     void Update()
     {
-        // 'S' 키를 눌렀을 때 스포트라이트를 켜고 끄기
-        if (Input.GetKeyDown(KeyCode.S))
-        {
-            ToggleSpotLight();
-        }
-        // 'P' 키를 눌렀을 때 포인트라이트를 켜고 끄기
-        if (Input.GetKeyDown(KeyCode.P))
-        {
-            TogglePointLight();
-        }
-    }
-    // 스포트라이트의 상태를 토글하는 함수
-    void ToggleSpotLight()
-    {
-        isSpotLightOn = !isSpotLightOn;
-        spotLight.enabled = isSpotLightOn;
+        //TODO: 이상현상 번호 9번일 때 작동되도록 해야 함.
+        //TODO: 플레이어 위치가 어디에 도착했을 때 정전
+        
     }
 
-    // 포인트라이트의 상태를 토글하는 함수
-    void TogglePointLight()
+    IEnumerator BlinkLights()
     {
-        isPointLightOn = !isPointLightOn;
-        pointLight.enabled = isPointLightOn;
+        // 조명을 깜빡이게 합니다.
+        for (float i = 0; i < blinkDuration; i += 0.2f)
+        {
+            if (spotLight != null)
+            {
+                spotLight.enabled = !spotLight.enabled;
+            }
+            if (pointLight != null)
+            {
+                pointLight.enabled = !pointLight.enabled;
+            }
+            yield return new WaitForSeconds(0.2f);
+        }
+
+        // 조명을 끕니다.
+        if (spotLight != null)
+        {
+            spotLight.enabled = false;
+        }
+        if (pointLight != null)
+        {
+            pointLight.enabled = false;
+        }
+
+        // 일정 시간 동안 꺼진 상태를 유지합니다.
+        yield return new WaitForSeconds(offDuration);
+
+        // 조명을 다시 켭니다.
+        if (spotLight != null)
+        {
+            spotLight.enabled = true;
+        }
+        if (pointLight != null)
+        {
+            pointLight.enabled = true;
+        }
+
     }
-}

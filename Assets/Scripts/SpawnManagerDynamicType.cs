@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class SpawnManagerDynamicType : MonoBehaviour
 {
+    public GameObject Player;
     public GameObject Mannequin;
     public GameObject SuitMan;
     public GameObject CleaningPanel;
@@ -145,10 +146,14 @@ public class SpawnManagerDynamicType : MonoBehaviour
     {
         IsCoroutineRunning = true;
 
-        while (Floor.transform.position.y < 3)
+        while (Floor.transform.position.y < 2)
         {
             Vector3 NewPosition = Floor.transform.position + Vector3.up * Time.deltaTime;
             Floor.transform.position = NewPosition;
+
+            Vector3 PlayerNewPosition = new Vector3(Player.transform.position.x, Floor.transform.position.y + 7, Player.transform.position.z);
+            Player.transform.position = PlayerNewPosition;
+
             yield return null;
         }
 
@@ -161,8 +166,12 @@ public class SpawnManagerDynamicType : MonoBehaviour
 
         while (Floor.transform.position.y > -5)
         {
-            Vector3 newPosition = Floor.transform.position + Vector3.down * Time.deltaTime;
-            Floor.transform.position = newPosition;
+            Vector3 NewPosition = Floor.transform.position + Vector3.down * Time.deltaTime;
+            Floor.transform.position = NewPosition;
+
+            Vector3 PlayerNewPosition = new Vector3(Player.transform.position.x, Floor.transform.position.y + 7, Player.transform.position.z);
+            Player.transform.position = PlayerNewPosition;
+
             yield return null;
         }
 

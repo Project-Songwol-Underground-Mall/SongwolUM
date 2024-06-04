@@ -14,7 +14,7 @@ public class PhenomenonArr
 public class PhenomenonManagement : MonoBehaviour
 {
     // 이상현상 종류가 FixedType이냐, DynamicType이냐에 따라 작동방식에 차이를 줘야 할 듯.
-    public PhenomenonArr[] PhenomenonSpawner = new PhenomenonArr[20];
+    public PhenomenonArr[] PhenomenonSpawner = new PhenomenonArr[14];
     public bool IsNormal = true;
 
 

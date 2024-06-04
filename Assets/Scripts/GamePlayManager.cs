@@ -25,15 +25,15 @@ public class GamePlayManager : MonoBehaviour
     // 13번 ~ 17번 : 실험 사이클3
 
     int NumOfCorrectAnswer = 0; // 현재 맞춘 정답 개수
-    int[,] ExperimentAPArray = new int[2, 5]; // 스테이지별 등장시킬 이상현상 번호 or 일반 스테이지
+    int[,] ExperimentAPArray = new int[3, 5]; // 스테이지별 등장시킬 이상현상 번호 or 일반 스테이지
 
     public GameObject SafetyAlarmBoard;
     public GameObject StageInfoPanel;
     public GameObject PrevStageResultPanel;
     public GameObject NumOfCorrectAnswerPanel;
-    public Material[] StageInfoMaterial = new Material[14];
-    public Material[] PrevStageResultMaterial = new Material[2];
-    public Material[] NumOfCorrectAnswerMaterial = new Material[11];
+    public Material[] StageInfoMaterial = new Material[18]; // 스테이지 정보 패널 마테리얼 배열
+    public Material[] PrevStageResultMaterial = new Material[2]; // 이전 스테이지 정답 여부 패널 마테리얼 배열
+    public Material[] NumOfCorrectAnswerMaterial = new Material[16]; // 맞춘 정답 개수 패널 마테리얼 배령
 
     // Start is called before the first frame update
     void Start()
@@ -58,24 +58,23 @@ public class GamePlayManager : MonoBehaviour
         {
             NumOfCorrectAnswer++;
             if (CurrentStage == 1) NumOfCorrectAnswer--;
-            if (CurrentStage == 6)
+            if (CurrentStage == 6 || CurrentStage == 12)
             {
                 SafetyAlarmBoard.SetActive(true);
                 Debug.Log("안전알람 보드가 보여야돼요");
             }
-            if (CurrentStage == 7)
+            if (CurrentStage == 7 || CurrentStage == 13)
             {
                 NumOfCorrectAnswer--;
                 SafetyAlarmBoard.SetActive(false);
             }
             
-
-
-            if (CurrentStage == 12)
+            if (CurrentStage == 17)
             {
-                ElevatorDoor.SetActive(false);
                 EndGame();
             }
+
+
             else
             {
                 Debug.Log("정답!");
@@ -159,30 +158,33 @@ public class GamePlayManager : MonoBehaviour
 
     void LotteryPhenomenon() // VR 실험 버전에서 게임 시작 전, 스테이지별 이상현상 유무와 이상현상 종류를 미리 추첨하는 함수
     {
-        for (int i = 0; i < 2; i++)
+        for (int i = 0; i < 3; i++)
         {
-            int NumOfNormalStage = Random.Range(0, 3);
-            bool isAddedPuzzleAP = false;
-
-            for (int j = 0; j < NumOfNormalStage; j++)
+            AbnormalNumber = Random.Range(0, 3);
+            if (!IsAbnormalOccured[AbnormalNumber])
             {
-                ExperimentAPArray[i, j] = -1;
+                ExperimentAPArray[i, 0] = AbnormalNumber;
+                IsAbnormalOccured[AbnormalNumber] = true;
             }
+            else i--;
+        }
 
-            for (int j = NumOfNormalStage; j < 5; j++)
+        bool isNormalStageAdded = false;
+        for (int i = 0; i < 3; i++)
+        {
+            for (int j = 1; j <= 4; j++)
             {
-                // 퍼즐 유형 이상현상이 아직 추가되지 않았을 때 - 전체 이상현상에서 랜덤 추첨
-                if (!isAddedPuzzleAP)
+                AbnormalNumber = Random.Range(-1, 14);
+                if (AbnormalNumber == -1)
                 {
-                    AbnormalNumber = Random.Range(0, 13);
-                    if (AbnormalNumber <= 3 && !IsAbnormalOccured[AbnormalNumber]) isAddedPuzzleAP = true;
+                    if (!isNormalStageAdded)
+                    {
+                        ExperimentAPArray[i, j] = AbnormalNumber;
+                        isNormalStageAdded = true;
+                    }
+                    else j--;
                 }
-
-                // 퍼즐 유형 이상현상이 추가되었을 때 - 공포 유형 이상현상에서만 랜덤 추첨
-                else AbnormalNumber = Random.Range(4, 13);
-
-
-                if (!IsAbnormalOccured[AbnormalNumber])
+                else if (!IsAbnormalOccured[AbnormalNumber])
                 {
                     ExperimentAPArray[i, j] = AbnormalNumber;
                     IsAbnormalOccured[AbnormalNumber] = true;
@@ -190,6 +192,7 @@ public class GamePlayManager : MonoBehaviour
                 else j--;
             }
 
+            // 한번 더 섞기
             for (int j = 4; j > 0; j--)
             {
                 int k = Random.Range(0, j + 1);
@@ -248,7 +251,7 @@ public class GamePlayManager : MonoBehaviour
 
     void ChangePSRPanel(bool IsCorrect)
     {
-        if (CurrentStage == 7)
+        if (CurrentStage == 7 || CurrentStage == 13)
         {
             PrevStageResultPanel.SetActive(false);
             return;

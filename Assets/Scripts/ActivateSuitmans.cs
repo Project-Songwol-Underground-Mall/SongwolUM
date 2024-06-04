@@ -32,7 +32,6 @@ public class ActivateSuitmans : MonoBehaviour
 
         if (Distance <= ActivationDistance && !isAnimationActivated)
         {
-            Debug.Log("Suitmans Enabled!");
             if (SuitManAnimators[0] != null)
             {
                 // 정장남 애니메이션 재생

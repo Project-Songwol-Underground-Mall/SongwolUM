@@ -12,8 +12,11 @@ public class SpawnManagerDynamicType : MonoBehaviour
     public GameObject Zombie;
     public GameObject LightSystem;
     public GameObject Floor;
+    public GameObject Ceiling;
+    public GameObject CeilingChangePoint;
     public AudioClip SirenSound;
     public AudioClip GhostSound;
+    public Material[] CeilingMaterial = new Material[2];
 
     private int phenomenonNumber = -1;
     private bool IsCoroutineRunning = false;
@@ -140,9 +143,32 @@ public class SpawnManagerDynamicType : MonoBehaviour
         }
     }
 
+    // 천장 벽지가 눈알 벽지로 바뀌는 이상현상
     public void EyeBallCeiling(bool isNormal)
     {
+        Renderer[] CeilingRenderer = Ceiling.GetComponentsInChildren<Renderer>();
+        if (isNormal)
+        {
+            CeilingChangePoint.SetActive(false);
+            foreach (Renderer renderer in CeilingRenderer)
+            {
+                renderer.material = CeilingMaterial[0];
+            }
+        }
 
+        else
+        {
+            CeilingChangePoint.SetActive(true);
+        }
+    }
+
+    public void ChangeCeilingToEyeBall()
+    {
+        Renderer[] CeilingRenderer = Ceiling.GetComponentsInChildren<Renderer>();
+        foreach (Renderer renderer in CeilingRenderer)
+        {
+            renderer.material = CeilingMaterial[1];
+        }
     }
 
     public int GetPhenomenonNumber()

@@ -14,7 +14,7 @@ public class PhenomenonArr
 public class PhenomenonManagement : MonoBehaviour
 {
     // 이상현상 종류가 FixedType이냐, DynamicType이냐에 따라 작동방식에 차이를 줘야 할 듯.
-    public PhenomenonArr[] PhenomenonSpawner = new PhenomenonArr[14];
+    public PhenomenonArr[] PhenomenonSpawner = new PhenomenonArr[12];
     public bool IsNormal = true;
 
 
@@ -40,7 +40,7 @@ public class PhenomenonManagement : MonoBehaviour
         // isNormal이 true일 때에는 모든 스포너가 정상 버전의 오브젝트를 소환한다.
         // isNormal이 false, 즉 이상현상 스테이지일 때는 PhenomenonNumber에 해당하는 스포너만 이상현상 버전의 오브젝트를 스폰한다.
 
-
+        Debug.Log("isNormal : " + isNormal);
         for (int i = 0; i < PhenomenonSpawner.Length; i++)
         {
             // 스폰은 세현이가 인스펙터에 오브젝트 다 넣으면 주석 풀기

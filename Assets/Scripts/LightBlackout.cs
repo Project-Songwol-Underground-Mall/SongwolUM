@@ -72,6 +72,9 @@ public class LightBlackout : MonoBehaviour
 
     IEnumerator BlinkLights()
     {
+        float StartDelay = Random.Range(3f, 7f);
+        yield return new WaitForSeconds(StartDelay);
+
         // 조명을 깜빡이게 합니다.
         for (float i = 0; i < blinkDuration; i += 0.2f)
         {

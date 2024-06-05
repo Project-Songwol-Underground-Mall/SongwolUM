@@ -10,7 +10,6 @@ public class GamePlayManager : MonoBehaviour
 
     int CurrentStage = 0; // 현재 구역 번호
     bool IsNormalStage = true; // 스테이지의 정상 및 이상현상 여부
-    int PrevAbnormalNumber = -1;
     int AbnormalNumber = -1; // 이상현상 스테이지에서 발생시킬 이상현상 번호
     bool[] IsAbnormalOccured = new bool[20]; // 이상현상 번호에 따른 발생 여부
 
@@ -71,7 +70,7 @@ public class GamePlayManager : MonoBehaviour
             
             if (CurrentStage == 17)
             {
-                EndGame();
+                Invoke("EndGame", 2.0f);
             }
 
 
@@ -99,13 +98,12 @@ public class GamePlayManager : MonoBehaviour
     /* 아닌 실제 게임 출시 버전에 사용될 함수, VR 실험 버전에는 LotteryPhenomenon()과 GetNextStage()를 사용*/
     void GetRandomStage(int StageNumber, bool IsCorrectDirection)// 스테이지 변경에 따른 스테이지 및 이상현상 랜덤 추첨
     {
-
-
         if (!IsCorrectDirection)
         {
             Debug.Log("오답입니다!");
             AbnormalNumber = -1;
             IsNormalStage = true;
+            for (int i = 0; i < IsAbnormalOccured.Length; i++) IsAbnormalOccured[i] = false;
             return;
         }
 
@@ -158,48 +156,15 @@ public class GamePlayManager : MonoBehaviour
 
     void LotteryPhenomenon() // VR 실험 버전에서 게임 시작 전, 스테이지별 이상현상 유무와 이상현상 종류를 미리 추첨하는 함수
     {
-        for (int i = 0; i < 3; i++)
-        {
-            AbnormalNumber = Random.Range(0, 3);
-            if (!IsAbnormalOccured[AbnormalNumber])
-            {
-                ExperimentAPArray[i, 0] = AbnormalNumber;
-                IsAbnormalOccured[AbnormalNumber] = true;
-            }
-            else i--;
-        }
+        for (int i = 0; i < 3; i++) ExperimentAPArray[0, i] = -1;
+        for (int i = 3; i < 15; i++) ExperimentAPArray[i / 5, i % 5] = i - 3;
 
-        bool isNormalStageAdded = false;
-        for (int i = 0; i < 3; i++)
+        for (int i = 14; i >= 0; i--)
         {
-            for (int j = 1; j <= 4; j++)
-            {
-                AbnormalNumber = Random.Range(-1, 14);
-                if (AbnormalNumber == -1)
-                {
-                    if (!isNormalStageAdded)
-                    {
-                        ExperimentAPArray[i, j] = AbnormalNumber;
-                        isNormalStageAdded = true;
-                    }
-                    else j--;
-                }
-                else if (!IsAbnormalOccured[AbnormalNumber])
-                {
-                    ExperimentAPArray[i, j] = AbnormalNumber;
-                    IsAbnormalOccured[AbnormalNumber] = true;
-                }
-                else j--;
-            }
-
-            // 한번 더 섞기
-            for (int j = 4; j > 0; j--)
-            {
-                int k = Random.Range(0, j + 1);
-                int temp = ExperimentAPArray[i, j];
-                ExperimentAPArray[i, j] = ExperimentAPArray[i, k];
-                ExperimentAPArray[i, k] = temp;
-            }
+            int k = Random.Range(0, i + 1);
+            int temp = ExperimentAPArray[i / 5, i % 5];
+            ExperimentAPArray[i / 5, i % 5] = ExperimentAPArray[k / 5, k % 5];
+            ExperimentAPArray[k / 5, k % 5] = temp;
         }
     }
 

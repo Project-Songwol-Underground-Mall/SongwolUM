@@ -6,6 +6,7 @@ public class LightSiren : MonoBehaviour
 {
     public Light spotLight;
     public Light pointLight;
+    public float StartDelay;
     
     // 초기 조명 색상을 저장하기 위한 변수
     private Color originalSpotColor;
@@ -49,15 +50,6 @@ public class LightSiren : MonoBehaviour
             StopCoroutine(intensityCoroutine);
         }
 
-        // 조명의 색상을 빨간색으로 변경합니다.
-        if (spotLight != null)
-        {
-            spotLight.color = Color.red;
-        }
-        if(pointLight != null)
-        {
-            pointLight.color = Color.red;
-        }
 
         // 조명의 세기를 주기적으로 변경하는 코루틴을 시작합니다.
         intensityCoroutine = StartCoroutine(PulseIntensity());
@@ -87,6 +79,18 @@ public class LightSiren : MonoBehaviour
 
     IEnumerator PulseIntensity()
     {
+        yield return new WaitForSeconds(StartDelay);
+
+        // 조명의 색상을 빨간색으로 변경합니다.
+        if (spotLight != null)
+        {
+            spotLight.color = Color.red;
+        }
+        if (pointLight != null)
+        {
+            pointLight.color = Color.red;
+        }
+
         while (true)
         {
             // 세기를 증가시킵니다.

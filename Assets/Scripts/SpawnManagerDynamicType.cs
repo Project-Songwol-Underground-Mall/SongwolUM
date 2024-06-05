@@ -15,10 +15,12 @@ public class SpawnManagerDynamicType : MonoBehaviour
     public GameObject Floor;
     public GameObject Ceiling;
     public GameObject CeilingChangePoint;
-    public AudioClip SirenSound;
-    public AudioClip GhostSound;
+    public AudioClip ghostClip;
+    public AudioClip ceilClip;
     public Material[] CeilingMaterial = new Material[2];
 
+    private AudioSource ghostAudioSource;
+    private AudioSource ceilAudioSource;
     private int phenomenonNumber = -1;
     private bool IsCoroutineRunning = false;
     // Start is called before the first frame update
@@ -153,13 +155,20 @@ public class SpawnManagerDynamicType : MonoBehaviour
     // 으스스한 귀신 사운드 재생 이상현상
     public void PlayGhostSound(bool isNormal)
     {
+        ghostAudioSource = gameObject.AddComponent<AudioSource>();
         if (isNormal)
         {
-
+            if (ghostAudioSource != null && ghostAudioSource.isPlaying)
+            {
+                ghostAudioSource.Stop();
+            }
         }
         else
         {
-
+            if (ghostAudioSource != null && !ghostAudioSource.isPlaying)
+            {
+                StartCoroutine(PlayGhostSoundAfterDelay(5.0f));
+            }
         }
     }
 
@@ -167,6 +176,7 @@ public class SpawnManagerDynamicType : MonoBehaviour
     public void EyeBallCeiling(bool isNormal)
     {
         Renderer[] CeilingRenderer = Ceiling.GetComponentsInChildren<Renderer>();
+
         if (isNormal)
         {
             CeilingChangePoint.SetActive(false);
@@ -174,8 +184,12 @@ public class SpawnManagerDynamicType : MonoBehaviour
             {
                 renderer.material = CeilingMaterial[0];
             }
-        }
 
+            if (ceilAudioSource != null && ceilAudioSource.isPlaying)
+            {
+                ceilAudioSource.Stop();
+            }
+        }
         else
         {
             CeilingChangePoint.SetActive(true);
@@ -188,6 +202,13 @@ public class SpawnManagerDynamicType : MonoBehaviour
         foreach (Renderer renderer in CeilingRenderer)
         {
             renderer.material = CeilingMaterial[1];
+        }
+
+        if (ceilAudioSource != null && ceilClip != null)
+        {
+            ceilAudioSource.clip = ceilClip;
+            ceilAudioSource.loop = true;
+            ceilAudioSource.Play();
         }
     }
 
@@ -236,5 +257,17 @@ public class SpawnManagerDynamicType : MonoBehaviour
         }
 
         IsCoroutineRunning = false;
+    }
+
+    IEnumerator PlayGhostSoundAfterDelay(float delay)
+    {
+        yield return new WaitForSeconds(delay);
+
+        if (ghostAudioSource != null && ghostClip != null)
+        {
+            ghostAudioSource.clip = ghostClip;
+            ghostAudioSource.loop = false;
+            ghostAudioSource.Play();
+        }
     }
 }

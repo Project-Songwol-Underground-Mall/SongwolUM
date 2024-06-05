@@ -6,7 +6,7 @@ public class ChangeCeilingMaterial : MonoBehaviour
 {
     public GameObject DTPM;
     bool isChanged = false;
-
+   
     // Start is called before the first frame update
     void Start()
     {

@@ -177,6 +177,8 @@ public class SpawnManagerDynamicType : MonoBehaviour
     {
         Renderer[] CeilingRenderer = Ceiling.GetComponentsInChildren<Renderer>();
 
+        ceilAudioSource = gameObject.AddComponent<AudioSource>();
+
         if (isNormal)
         {
             CeilingChangePoint.SetActive(false);
@@ -203,7 +205,7 @@ public class SpawnManagerDynamicType : MonoBehaviour
         {
             renderer.material = CeilingMaterial[1];
         }
-
+     
         if (ceilAudioSource != null && ceilClip != null)
         {
             ceilAudioSource.clip = ceilClip;

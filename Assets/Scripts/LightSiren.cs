@@ -7,7 +7,13 @@ public class LightSiren : MonoBehaviour
     public Light spotLight;
     public Light pointLight;
     public float StartDelay;
-    
+    public AudioClip sirenClip; // 사이렌 사운드를 위한 오디오 소스
+
+    public float enLightTime;
+    public float deLightTime;
+
+    private AudioSource audioSource; // 오디오 재생을 위한 오디오 소스
+
     // 초기 조명 색상을 저장하기 위한 변수
     private Color originalSpotColor;
     private float originalSpotIntensity;
@@ -34,6 +40,8 @@ public class LightSiren : MonoBehaviour
             originalPointColor = pointLight.color;
             originalPointIntensity = pointLight.intensity;
         }
+
+        audioSource = gameObject.AddComponent<AudioSource>();
     }
 
     // Update is called once per frame
@@ -49,7 +57,6 @@ public class LightSiren : MonoBehaviour
         {
             StopCoroutine(intensityCoroutine);
         }
-
 
         // 조명의 세기를 주기적으로 변경하는 코루틴을 시작합니다.
         intensityCoroutine = StartCoroutine(PulseIntensity());
@@ -74,11 +81,15 @@ public class LightSiren : MonoBehaviour
             pointLight.color = originalPointColor;
             pointLight.intensity = originalPointIntensity;
         }
-    
+        if (audioSource != null && audioSource.isPlaying)
+        {
+            audioSource.Stop();
+        }
     }
 
     IEnumerator PulseIntensity()
     {
+        //잠시 텀을 주고 발생
         yield return new WaitForSeconds(StartDelay);
 
         // 조명의 색상을 빨간색으로 변경합니다.
@@ -91,6 +102,13 @@ public class LightSiren : MonoBehaviour
             pointLight.color = Color.red;
         }
 
+        if (audioSource != null && sirenClip != null)
+        {
+            audioSource.clip = sirenClip;
+            audioSource.loop = true;
+            audioSource.Play();
+        }
+
         while (true)
         {
             // 세기를 증가시킵니다.
@@ -99,11 +117,11 @@ public class LightSiren : MonoBehaviour
             {
                 if (spotLight != null)
                 {
-                    spotLight.intensity += Time.deltaTime * 130;
+                    spotLight.intensity += Time.deltaTime * enLightTime;
                 }
                 if (pointLight != null)
                 {
-                    pointLight.intensity += Time.deltaTime * 130;
+                    pointLight.intensity += Time.deltaTime * enLightTime;
                 }
                 yield return null;
             }
@@ -114,11 +132,11 @@ public class LightSiren : MonoBehaviour
             {
                 if (spotLight != null)
                 {
-                    spotLight.intensity -= Time.deltaTime * 130;
+                    spotLight.intensity -= Time.deltaTime * deLightTime;
                 }
                 if (pointLight != null)
                 {
-                    pointLight.intensity -= Time.deltaTime * 130;
+                    pointLight.intensity -= Time.deltaTime * deLightTime;
                 }
                 yield return null;
             }

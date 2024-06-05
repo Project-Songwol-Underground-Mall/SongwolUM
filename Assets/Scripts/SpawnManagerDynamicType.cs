@@ -10,7 +10,8 @@ public class SpawnManagerDynamicType : MonoBehaviour
     public GameObject CleaningPanel;
     public GameObject ZombieSpawner;
     public GameObject Zombie;
-    public GameObject LightSystem;
+    public GameObject BlackoutSystem;
+    public GameObject SirenSystem;
     public GameObject Floor;
     public GameObject Ceiling;
     public GameObject CeilingChangePoint;
@@ -88,27 +89,46 @@ public class SpawnManagerDynamicType : MonoBehaviour
     // 조명이 꺼졌다가 켜지는 이상현상
     public void TurnOffLight(bool isNormal)
     {
-        if (isNormal)
+        BlackoutController blackoutController = BlackoutSystem.GetComponent<BlackoutController>();
+        if (blackoutController != null)
         {
-            LightSystem.SetActive(true);
+            if (isNormal)
+            {
+                BlackoutSystem.SetActive(false);
+                blackoutController.ResetLights();
+            }
+            else
+            {
+                BlackoutSystem.SetActive(true);
+                blackoutController.StartBlackoutEffect();
+            }
         }
         else
         {
-            LightSystem.SetActive(false);
+            Debug.LogError("lightBlackout script not found on LightSystem object.");
         }
     }
 
     // 조명이 붉게 변하고 사이렌 소리가 들리는 이상현상
     public void Emergency(bool isNormal)
     {
-        if (isNormal)
+        SirenController sirenController = SirenSystem.GetComponent<SirenController>();
+        if (sirenController != null)
         {
-            LightSystem.SetActive(true);
-
+            if (isNormal)
+            {
+                SirenSystem.SetActive(false);
+                sirenController.ResetLights();
+            }
+            else
+            {
+                SirenSystem.SetActive(true);
+                sirenController.StartSirenEffect();
+            }
         }
         else
         {
-            LightSystem.SetActive(false);
+            Debug.LogError("sirenController script not found on LightSystem object.");
         }
     }
 

@@ -32,13 +32,14 @@ public class SpawnManagerDynamicType : MonoBehaviour
     public void ActivateAP(int PhenomenonNumber, bool isNormal)
     {
         phenomenonNumber = PhenomenonNumber;
-        if (PhenomenonNumber == 6) AnimateMannequin(isNormal);
-        if (PhenomenonNumber == 7) MoveSuitMan(isNormal);
-        if (PhenomenonNumber == 8) SpawnZombie(isNormal);
-        if (PhenomenonNumber == 9) TurnOffLight(isNormal);
-        if (PhenomenonNumber == 10) Emergency(isNormal);
-        if (PhenomenonNumber == 11) ComeUpFloor(isNormal);
-        if (PhenomenonNumber == 12) PlayGhostSound(isNormal);   
+        if (PhenomenonNumber == 4) AnimateMannequin(isNormal);
+        if (PhenomenonNumber == 5) MoveSuitMan(isNormal);
+        if (PhenomenonNumber == 6) SpawnZombie(isNormal);
+        if (PhenomenonNumber == 7) TurnOffLight(isNormal);
+        if (PhenomenonNumber == 8) Emergency(isNormal);
+        if (PhenomenonNumber == 9) ComeUpFloor(isNormal);
+        if (PhenomenonNumber == 10) PlayGhostSound(isNormal);
+        if (PhenomenonNumber == 11) EyeBallCeiling(isNormal);
     }
 
     // 움직이는 마네킹 이상현상
@@ -137,6 +138,11 @@ public class SpawnManagerDynamicType : MonoBehaviour
         {
 
         }
+    }
+
+    public void EyeBallCeiling(bool isNormal)
+    {
+
     }
 
     public int GetPhenomenonNumber()

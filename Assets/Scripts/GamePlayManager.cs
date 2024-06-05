@@ -161,7 +161,7 @@ public class GamePlayManager : MonoBehaviour
 
         for (int i = 14; i >= 0; i--)
         {
-            int k = Random.Range(0, i + 1);
+            int k = Random.Range(0, 15);
             int temp = ExperimentAPArray[i / 5, i % 5];
             ExperimentAPArray[i / 5, i % 5] = ExperimentAPArray[k / 5, k % 5];
             ExperimentAPArray[k / 5, k % 5] = temp;
@@ -191,6 +191,12 @@ public class GamePlayManager : MonoBehaviour
             {
                 Cycle = 1;
                 Index = StageNumber - 7;
+            }
+            
+            if (13 < StageNumber && StageNumber < 18)
+            {
+                Cycle = 2;
+                Index = StageNumber - 13;
             }
             Debug.Log("StageNumber : " + StageNumber);
             Debug.Log("Cycle : " + Cycle + "Index : " + Index);

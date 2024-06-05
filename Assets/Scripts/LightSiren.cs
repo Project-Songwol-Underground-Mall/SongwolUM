@@ -63,7 +63,7 @@ public class LightSiren : MonoBehaviour
         intensityCoroutine = StartCoroutine(PulseIntensity());
     }
 
-    void ResetLight()
+    public void ResetLight()
     {
         // 현재 실행 중인 코루틴이 있으면 중지합니다.
         if (intensityCoroutine != null)
@@ -90,31 +90,31 @@ public class LightSiren : MonoBehaviour
         while (true)
         {
             // 세기를 증가시킵니다.
-            while ((spotLight != null && spotLight.intensity < 2f) ||
-                   (pointLight != null && pointLight.intensity < 2f))
+            while ((spotLight != null && spotLight.intensity < 130f) ||
+                   (pointLight != null && pointLight.intensity < 130f))
             {
                 if (spotLight != null)
                 {
-                    spotLight.intensity += Time.deltaTime;
+                    spotLight.intensity += Time.deltaTime * 130;
                 }
                 if (pointLight != null)
                 {
-                    pointLight.intensity += Time.deltaTime;
+                    pointLight.intensity += Time.deltaTime * 130;
                 }
                 yield return null;
             }
 
             // 세기를 감소시킵니다.
-            while ((spotLight != null && spotLight.intensity > 0.5f) ||
-                   (pointLight != null && pointLight.intensity > 0.5f))
+            while ((spotLight != null && spotLight.intensity > 30f) ||
+                   (pointLight != null && pointLight.intensity > 30f))
             {
                 if (spotLight != null)
                 {
-                    spotLight.intensity -= Time.deltaTime;
+                    spotLight.intensity -= Time.deltaTime * 130;
                 }
                 if (pointLight != null)
                 {
-                    pointLight.intensity -= Time.deltaTime;
+                    pointLight.intensity -= Time.deltaTime * 130;
                 }
                 yield return null;
             }

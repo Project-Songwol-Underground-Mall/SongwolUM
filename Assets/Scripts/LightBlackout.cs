@@ -10,6 +10,7 @@ public class LightBlackout : MonoBehaviour
     public float blinkDuration = 1.0f;
     public float offDuration = 1.0f;
 
+    private Coroutine blinkCoroutine;
     // Start is called before the first frame update
     void Start()
     {
@@ -19,6 +20,10 @@ public class LightBlackout : MonoBehaviour
         {
             spotLight = spotLightTransform.GetComponent<Light>();
         }
+        else
+        {
+            Debug.LogError("SpotLight object not found on LightSystem object.");
+        }
 
         // 자식 오브젝트 중 이름이 PointLight인 오브젝트를 찾습니다.
         Transform pointLightTransform = transform.Find("Point Light");
@@ -26,6 +31,11 @@ public class LightBlackout : MonoBehaviour
         {
             pointLight = pointLightTransform.GetComponent<Light>();
         }
+        else
+        {
+            Debug.LogError("PointLight object not found on LightSystem object.");
+        }
+
     }
     private void OnEnable()
     {
@@ -41,6 +51,23 @@ public class LightBlackout : MonoBehaviour
     public void StartBlackout()
     {
         StartCoroutine(BlinkLights());
+    }
+
+    public void ResetLight()
+    {
+        if (blinkCoroutine != null)
+        {
+            StopCoroutine(blinkCoroutine);
+            blinkCoroutine = null;
+        }
+        if (spotLight != null)
+        {
+            spotLight.enabled = true;
+        }
+        if (pointLight != null)
+        {
+            pointLight.enabled = true;
+        }
     }
 
     IEnumerator BlinkLights()

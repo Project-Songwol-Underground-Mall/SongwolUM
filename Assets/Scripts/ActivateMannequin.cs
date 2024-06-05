@@ -8,6 +8,7 @@ public class ActivateMannequin : MonoBehaviour
     public float ActivationDistance = 50f; // 애니메이션 작동 범위
     public GameObject[] MannequinEyes = new GameObject[2];
     public Material[] MannequinEyesMaterial = new Material[2];
+    public AudioSource MannequinSound;
     bool isAnimationActivated = false;
     private Animator MannequinAnimator;
     private Renderer LeftMERenderer;
@@ -39,9 +40,9 @@ public class ActivateMannequin : MonoBehaviour
                 MannequinAnimator.Play("scare_mnq");
                 LeftMERenderer.material = MannequinEyesMaterial[1];
                 RightMERenderer.material = MannequinEyesMaterial[1];
+                Invoke("PlaySound", 0.5f);
 
-                // 3초 후에 상태 변경
-                StartCoroutine(ChangeStateAfterDelay(3f));
+                // StartCoroutine(ChangeStateAfterDelay(3f));
             }
             else
             {
@@ -54,12 +55,24 @@ public class ActivateMannequin : MonoBehaviour
         }
     }
 
+    void PlaySound()
+    { 
+        MannequinSound.Play();
+    }
+
+    void StopSound()
+    {
+        MannequinSound.Stop();
+    }
+
+
     IEnumerator ChangeStateAfterDelay(float Delay)
     {
         yield return new WaitForSeconds(Delay);
 
         // Animator의 상태를 변경
         MannequinAnimator.Play("idle_mnq");
+        StopSound();
         isAnimationActivated = false;
 
         // 마네킹 눈 색깔을 원래대로 변경

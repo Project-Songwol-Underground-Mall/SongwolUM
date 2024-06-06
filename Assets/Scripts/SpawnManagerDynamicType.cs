@@ -15,18 +15,20 @@ public class SpawnManagerDynamicType : MonoBehaviour
     public GameObject Floor;
     public GameObject Ceiling;
     public GameObject CeilingChangePoint;
-    public AudioClip ghostClip;
-    public AudioClip ceilClip;
+    public GameObject GhostSound;
+    public GameObject CeilSound;
     public Material[] CeilingMaterial = new Material[2];
 
     private AudioSource ghostAudioSource;
     private AudioSource ceilAudioSource;
+
     private int phenomenonNumber = -1;
     private bool IsCoroutineRunning = false;
     // Start is called before the first frame update
     void Start()
     {
-        
+        ghostAudioSource = GhostSound.GetComponent<AudioSource>();
+        ceilAudioSource = CeilSound.GetComponent<AudioSource>();
     }
 
     // Update is called once per frame
@@ -155,9 +157,10 @@ public class SpawnManagerDynamicType : MonoBehaviour
     // 으스스한 귀신 사운드 재생 이상현상
     public void PlayGhostSound(bool isNormal)
     {
-        ghostAudioSource = gameObject.AddComponent<AudioSource>();
+        
         if (isNormal)
         {
+            
             if (ghostAudioSource != null && ghostAudioSource.isPlaying)
             {
                 ghostAudioSource.Stop();
@@ -176,8 +179,6 @@ public class SpawnManagerDynamicType : MonoBehaviour
     public void EyeBallCeiling(bool isNormal)
     {
         Renderer[] CeilingRenderer = Ceiling.GetComponentsInChildren<Renderer>();
-
-        ceilAudioSource = gameObject.AddComponent<AudioSource>();
 
         if (isNormal)
         {
@@ -206,10 +207,8 @@ public class SpawnManagerDynamicType : MonoBehaviour
             renderer.material = CeilingMaterial[1];
         }
      
-        if (ceilAudioSource != null && ceilClip != null)
+        if (ceilAudioSource != null)
         {
-            ceilAudioSource.clip = ceilClip;
-            ceilAudioSource.loop = true;
             ceilAudioSource.Play();
         }
     }
@@ -265,10 +264,8 @@ public class SpawnManagerDynamicType : MonoBehaviour
     {
         yield return new WaitForSeconds(delay);
 
-        if (ghostAudioSource != null && ghostClip != null)
+        if (ghostAudioSource != null)
         {
-            ghostAudioSource.clip = ghostClip;
-            ghostAudioSource.loop = false;
             ghostAudioSource.Play();
         }
     }

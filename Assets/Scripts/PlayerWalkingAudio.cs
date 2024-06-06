@@ -23,7 +23,6 @@ public class PlayerWalkingAudio : MonoBehaviour
 
         if (CurrentPosition != PreviousPosition)
         {
-            // 위치가 변했으면 오디오 재생
             if (!WalkingAudio.isPlaying)
             {
                 PlayNextClip();
@@ -36,12 +35,12 @@ public class PlayerWalkingAudio : MonoBehaviour
         }
         else
         {
-            // 위치가 변하지 않았으면 오디오 멈춤
             if (WalkingAudio.isPlaying)
             {
                 WalkingAudio.Stop();
             }
         }
+
 
         PreviousPosition = CurrentPosition;
     }

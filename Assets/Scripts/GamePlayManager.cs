@@ -1,11 +1,15 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 public class GamePlayManager : MonoBehaviour
 {
     public GameObject SpawnManager;
     public GameObject ElevatorDoor;
+    public GameObject GameOverPanel;
+    public TextMeshProUGUI TMPNumOfCorrectAnswer;
+
     public bool CanTeleport = true;
 
     int CurrentStage = 0; // 현재 구역 번호
@@ -53,6 +57,17 @@ public class GamePlayManager : MonoBehaviour
     public void ChangeStage(bool IsFront) // 앞으로 전진 혹은 뒤로 돌아갔을 시 스테이지 증가 및 정답여부 판별
     {
         CurrentStage++;
+        Debug.Log("CurrentStage : " + CurrentStage);
+
+        if (CurrentStage == 18)
+        {
+            Debug.Log("게임 종료");
+            ChangePSRPanel(false);
+            ChangeStageInfoPanel();
+            ChangeNOCAPanel();
+            Invoke("EndGame", 0.5f);
+        }
+
         if ((IsFront && IsNormalStage) || (!IsFront && !IsNormalStage))
         {
             NumOfCorrectAnswer++;
@@ -66,11 +81,6 @@ public class GamePlayManager : MonoBehaviour
             {
                 NumOfCorrectAnswer--;
                 SafetyAlarmBoard.SetActive(false);
-            }
-            
-            if (CurrentStage == 17)
-            {
-                Invoke("EndGame", 2.0f);
             }
 
 
@@ -150,7 +160,18 @@ public class GamePlayManager : MonoBehaviour
 
     void EndGame()
     {
-        Debug.Log("게임 종료");
+        Debug.Log("EndGame 함수 실행");
+        if (TMPNumOfCorrectAnswer != null)
+        {
+            TMPNumOfCorrectAnswer.gameObject.SetActive(true);
+            TMPNumOfCorrectAnswer.text = "총 정답 개수 : " + NumOfCorrectAnswer + " / 15";
+        }
+
+        if (GameOverPanel != null)
+        {
+            GameOverPanel.SetActive(true);
+        }
+        Time.timeScale = 0;
     }
 
 
@@ -193,15 +214,13 @@ public class GamePlayManager : MonoBehaviour
                 Index = StageNumber - 7;
             }
             
-            if (13 < StageNumber && StageNumber < 18)
+            if (12 < StageNumber && StageNumber < 18)
             {
                 Cycle = 2;
                 Index = StageNumber - 13;
             }
-            Debug.Log("StageNumber : " + StageNumber);
             Debug.Log("Cycle : " + Cycle + "Index : " + Index);
             Debug.Log("이상현상 번호(-1이면 일반 스테이지) : " + ExperimentAPArray[Cycle, Index]);
-            if (ExperimentAPArray[Cycle, Index] <= 3 && ExperimentAPArray[Cycle, Index] != -1) Debug.Log("퍼즐 이상현상입니다.");
             APNumber = ExperimentAPArray[Cycle, Index];
             if (APNumber != -1) IsNormalStage = false;
         }
@@ -212,6 +231,11 @@ public class GamePlayManager : MonoBehaviour
 
     void ChangeStageInfoPanel()
     {
+        if (CurrentStage == 18)
+        {
+            StageInfoPanel.SetActive(false);
+            return;
+        }
         Renderer SIPRenderer = StageInfoPanel.GetComponent<Renderer>();
 
         if (SIPRenderer != null)
@@ -222,6 +246,12 @@ public class GamePlayManager : MonoBehaviour
 
     void ChangePSRPanel(bool IsCorrect)
     {
+        if (CurrentStage == 18)
+        {
+            PrevStageResultPanel.SetActive(false);
+            return;
+        }
+
         if (CurrentStage == 7 || CurrentStage == 13)
         {
             PrevStageResultPanel.SetActive(false);
@@ -245,6 +275,11 @@ public class GamePlayManager : MonoBehaviour
     {
         if (CurrentStage != 1) NumOfCorrectAnswerPanel.SetActive(true);
 
+        if (CurrentStage == 18)
+        {
+            NumOfCorrectAnswerPanel.SetActive(false);
+            return;
+        }
 
         Renderer SIPRenderer = NumOfCorrectAnswerPanel.GetComponent<Renderer>();
 

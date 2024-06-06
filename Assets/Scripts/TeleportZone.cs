@@ -30,7 +30,6 @@ public class TeleportZone : MonoBehaviour
             Destroy(GuideBoard);
         }
 
-        Debug.Log("충돌한 오브젝트 이름 : " + other.name);
         if (other.CompareTag("Player") && CheckCanTeleport())
         {
             Vector3 PlayerPosition = other.transform.position;

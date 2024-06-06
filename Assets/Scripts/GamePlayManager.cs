@@ -1,11 +1,15 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 public class GamePlayManager : MonoBehaviour
 {
     public GameObject SpawnManager;
     public GameObject ElevatorDoor;
+    public GameObject GameOverPanel;
+    public TextMeshProUGUI TMPNumOfCorrectAnswer;
+
     public bool CanTeleport = true;
 
     int CurrentStage = 0; // 현재 구역 번호
@@ -67,10 +71,10 @@ public class GamePlayManager : MonoBehaviour
                 NumOfCorrectAnswer--;
                 SafetyAlarmBoard.SetActive(false);
             }
-            
+
             if (CurrentStage == 17)
             {
-                Invoke("EndGame", 2.0f);
+                Invoke("EndGame", 0.5f);
             }
 
 
@@ -151,6 +155,17 @@ public class GamePlayManager : MonoBehaviour
     void EndGame()
     {
         Debug.Log("게임 종료");
+        if (TMPNumOfCorrectAnswer != null)
+        {
+            TMPNumOfCorrectAnswer.gameObject.SetActive(true);
+            TMPNumOfCorrectAnswer.text = "총 정답 개수 : " + NumOfCorrectAnswer + " / 15";
+        }
+
+        if (GameOverPanel != null)
+        {
+            GameOverPanel.SetActive(true);
+        }
+        Time.timeScale = 0;
     }
 
 

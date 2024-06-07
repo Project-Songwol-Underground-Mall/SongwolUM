@@ -59,6 +59,14 @@ public class GamePlayManager : MonoBehaviour
         CurrentStage++;
         Debug.Log("CurrentStage : " + CurrentStage);
 
+        if (CurrentStage == 1)
+        {
+            GetNextStage(CurrentStage);
+            ChangeStageInfoPanel();
+            ChangePSRPanel(true);
+            return;
+        }
+
         if (CurrentStage == 18)
         {
             Debug.Log("게임 종료");
@@ -68,27 +76,24 @@ public class GamePlayManager : MonoBehaviour
             Invoke("EndGame", 0.5f);
         }
 
+
         if ((IsFront && IsNormalStage) || (!IsFront && !IsNormalStage))
         {
+            PrevStageResultPanel.SetActive(true);
             NumOfCorrectAnswer++;
-            if (CurrentStage == 1) NumOfCorrectAnswer--;
-            if (CurrentStage == 6 || CurrentStage == 12)
-            {
-                SafetyAlarmBoard.SetActive(true);
-                Debug.Log("안전알람 보드가 보여야돼요");
-            }
+ 
             if (CurrentStage == 7 || CurrentStage == 13)
             {
                 NumOfCorrectAnswer--;
-                SafetyAlarmBoard.SetActive(false);
+                PrevStageResultPanel.SetActive(false);
+                GetNextStage(CurrentStage);
             }
-
 
             else
             {
                 Debug.Log("정답!");
                 // GetRandomStage(CurrentStage, true);
-                GetNextStage(CurrentStage, true);
+                GetNextStage(CurrentStage);
                 ChangePSRPanel(true);
             }
         }
@@ -96,9 +101,9 @@ public class GamePlayManager : MonoBehaviour
         else
         {
             Debug.Log("오답!");
-            ElevatorDoor.SetActive(true);
             // GetRandomStage(CurrentStage, false);
-            GetNextStage(CurrentStage, false);
+            PrevStageResultPanel.SetActive(true);
+            GetNextStage(CurrentStage);
             ChangePSRPanel(false);
         }
         ChangeStageInfoPanel();
@@ -187,21 +192,22 @@ public class GamePlayManager : MonoBehaviour
             ExperimentAPArray[i / 5, i % 5] = ExperimentAPArray[k / 5, k % 5];
             ExperimentAPArray[k / 5, k % 5] = temp;
         }
+        ExperimentAPArray[0, 0] = 4;
     }
 
-    void GetNextStage(int StageNumber, bool IsCorrectDirection)
+    void GetNextStage(int StageNumber)
     {
         IsNormalStage = true;
         int APNumber = -1; // 이상현상 번호
         if (StageNumber == 6 || StageNumber == 12) // 실험 사이클 종료후 휴식용 일반 스테이지
         {
             IsNormalStage = true;
-            // 현재 휴식 스테이지 임을 나타내는 안내판 스폰, 바닥 표식 변경이 필요
-
+            SafetyAlarmBoard.SetActive(true);
         }
 
         else
         {
+            SafetyAlarmBoard.SetActive(false);
             int Cycle = 0, Index = 0;
             if (StageNumber < 6)
             {

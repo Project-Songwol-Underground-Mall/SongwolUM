@@ -27,6 +27,16 @@ public class ActivateMannequin : MonoBehaviour
         RightMERenderer = MannequinEyes[1].GetComponent<Renderer>();
     }
 
+    private void OnDisable()
+    {
+        isAnimationActivated = false;
+        MannequinAnimator = GetComponent<Animator>();
+        LeftMERenderer = MannequinEyes[0].GetComponent<Renderer>();
+        RightMERenderer = MannequinEyes[1].GetComponent<Renderer>();
+        LeftMERenderer.material = MannequinEyesMaterial[0];
+        RightMERenderer.material = MannequinEyesMaterial[0];
+    }
+
     void Update()
     {
         float Distance = Vector3.Distance(transform.position, Player.transform.position);
@@ -42,7 +52,7 @@ public class ActivateMannequin : MonoBehaviour
                 RightMERenderer.material = MannequinEyesMaterial[1];
                 Invoke("PlaySound", 0.5f);
 
-                // StartCoroutine(ChangeStateAfterDelay(3f));
+                StartCoroutine(ChangeStateAfterDelay(3f));
             }
             else
             {
@@ -71,13 +81,11 @@ public class ActivateMannequin : MonoBehaviour
         yield return new WaitForSeconds(Delay);
 
         // Animator의 상태를 변경
-        MannequinAnimator.Play("idle_mnq");
         StopSound();
-        isAnimationActivated = false;
 
         // 마네킹 눈 색깔을 원래대로 변경
-        LeftMERenderer.material = MannequinEyesMaterial[0];
-        RightMERenderer.material = MannequinEyesMaterial[0];
+        // LeftMERenderer.material = MannequinEyesMaterial[0];
+        // RightMERenderer.material = MannequinEyesMaterial[0];
     }
 
 }

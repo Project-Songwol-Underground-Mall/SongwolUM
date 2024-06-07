@@ -6,7 +6,8 @@ public class TeleportZone : MonoBehaviour
 {
 
     public GameObject Player;
-    public GameObject GuideBoard;
+    public GameObject TutorialGuide1;
+    public GameObject TutorialGuide2;
     public Transform Destination;
     public bool IsFront;
     public float CoolDown = 3f;
@@ -25,10 +26,16 @@ public class TeleportZone : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (GuideBoard != null) 
+        if (TutorialGuide1 != null) 
         {
-            Destroy(GuideBoard);
+            Destroy(TutorialGuide1);
         }
+
+        if (TutorialGuide2 != null)
+        {
+            Destroy(TutorialGuide2);
+        }
+
 
         if (other.CompareTag("Player") && CheckCanTeleport())
         {

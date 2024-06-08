@@ -24,14 +24,14 @@ public class SpawnManagerDynamicType : MonoBehaviour
 
     private int phenomenonNumber = -1;
     private bool IsCoroutineRunning = false;
-    // Start is called before the first frame update
+    private Coroutine CurrentFloorCoroutine = null;
+
     void Start()
     {
         ghostAudioSource = GhostSound.GetComponent<AudioSource>();
         ceilAudioSource = CeilSound.GetComponent<AudioSource>();
     }
 
-    // Update is called once per frame
     void Update()
     {
         
@@ -139,19 +139,18 @@ public class SpawnManagerDynamicType : MonoBehaviour
     // 바닥이 올라오는 이상현상
     public void ComeUpFloor(bool isNormal)
     {
+        if (CurrentFloorCoroutine != null)
+        {
+            StopCoroutine(CurrentFloorCoroutine);
+        }
+
         if (!isNormal)
         {
-            if (!IsCoroutineRunning)
-            {
-                StartCoroutine(MoveFloorUp());
-            }
+            CurrentFloorCoroutine = StartCoroutine(MoveFloorUp());
         }
         else
         {
-            if (!IsCoroutineRunning)
-            {
-                StartCoroutine(MoveFloorDown());
-            }
+            CurrentFloorCoroutine = StartCoroutine(MoveFloorDown());
         }
     }
     // 으스스한 귀신 사운드 재생 이상현상

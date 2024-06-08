@@ -23,15 +23,14 @@ public class SpawnManagerDynamicType : MonoBehaviour
     private AudioSource ceilAudioSource;
 
     private int phenomenonNumber = -1;
-    private bool IsCoroutineRunning = false;
-    // Start is called before the first frame update
+    private Coroutine CurrentFloorCoroutine = null;
+
     void Start()
     {
         ghostAudioSource = GhostSound.GetComponent<AudioSource>();
         ceilAudioSource = CeilSound.GetComponent<AudioSource>();
     }
 
-    // Update is called once per frame
     void Update()
     {
         
@@ -139,25 +138,23 @@ public class SpawnManagerDynamicType : MonoBehaviour
     // 바닥이 올라오는 이상현상
     public void ComeUpFloor(bool isNormal)
     {
+        if (CurrentFloorCoroutine != null)
+        {
+            StopCoroutine(CurrentFloorCoroutine);
+        }
+
         if (!isNormal)
         {
-            if (!IsCoroutineRunning)
-            {
-                StartCoroutine(MoveFloorUp());
-            }
+            CurrentFloorCoroutine = StartCoroutine(MoveFloorUp());
         }
         else
         {
-            if (!IsCoroutineRunning)
-            {
-                StartCoroutine(MoveFloorDown());
-            }
+            CurrentFloorCoroutine = StartCoroutine(MoveFloorDown());
         }
     }
     // 으스스한 귀신 사운드 재생 이상현상
     public void PlayGhostSound(bool isNormal)
     {
-        
         if (isNormal)
         {
             
@@ -226,8 +223,6 @@ public class SpawnManagerDynamicType : MonoBehaviour
 
     IEnumerator MoveFloorUp()
     {
-        IsCoroutineRunning = true;
-
         while (Floor.transform.position.y < 2)
         {
             Vector3 NewPosition = Floor.transform.position + Vector3.up * Time.deltaTime;
@@ -239,13 +234,10 @@ public class SpawnManagerDynamicType : MonoBehaviour
             yield return null;
         }
 
-        IsCoroutineRunning = false;
     }
 
     IEnumerator MoveFloorDown()
     {
-        IsCoroutineRunning = true;
-
         while (Floor.transform.position.y > -5)
         {
             Vector3 NewPosition = Floor.transform.position + Vector3.down * Time.deltaTime;
@@ -256,8 +248,6 @@ public class SpawnManagerDynamicType : MonoBehaviour
 
             yield return null;
         }
-
-        IsCoroutineRunning = false;
     }
 
     IEnumerator PlayGhostSoundAfterDelay(float delay)

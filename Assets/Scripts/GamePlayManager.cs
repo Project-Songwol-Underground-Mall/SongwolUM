@@ -159,7 +159,7 @@ public class GamePlayManager : MonoBehaviour
 
     public void ResetTeleport()
     {
-        Debug.Log("5초 후 CanTeleport 리셋");
+        Debug.Log("텔레포트 활성화");
         CanTeleport = true;
     }
 

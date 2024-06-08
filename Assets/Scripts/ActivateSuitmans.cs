@@ -8,8 +8,8 @@ public class ActivateSuitmans : MonoBehaviour
     public GameObject[] SuitMans = new GameObject[5];
     bool isAnimationActivated = false;
     private Animator[] SuitManAnimators = new Animator[5];
-    private float ActivationDistance = 60f; // 애니메이션 작동 범위
-    private float MoveDistance = 40f; // 정장남 이동 거리
+    private float ActivationDistance = 50f; // 애니메이션 작동 범위
+    private float MoveDistance = 30f; // 정장남 이동 거리
     // Start is called before the first frame update
     void Start()
     {
@@ -42,8 +42,6 @@ public class ActivateSuitmans : MonoBehaviour
                     Debug.Log("춤추는 애니메이션 재생");
                 }
                 MoveSuitMans();
-                // 4초 후에 상태 변경
-                // StartCoroutine(ChangeStateAfterDelay(0.6f));
             }
             else
             {
@@ -81,6 +79,5 @@ public class ActivateSuitmans : MonoBehaviour
         {
             SuitManAnimators[i].Play("stand_suit");
         }
-        // isAnimationActivated = false;
     }
 }

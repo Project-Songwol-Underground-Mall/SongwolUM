@@ -23,7 +23,6 @@ public class SpawnManagerDynamicType : MonoBehaviour
     private AudioSource ceilAudioSource;
 
     private int phenomenonNumber = -1;
-    private bool IsCoroutineRunning = false;
     private Coroutine CurrentFloorCoroutine = null;
 
     void Start()
@@ -156,7 +155,6 @@ public class SpawnManagerDynamicType : MonoBehaviour
     // 으스스한 귀신 사운드 재생 이상현상
     public void PlayGhostSound(bool isNormal)
     {
-        
         if (isNormal)
         {
             
@@ -225,8 +223,6 @@ public class SpawnManagerDynamicType : MonoBehaviour
 
     IEnumerator MoveFloorUp()
     {
-        IsCoroutineRunning = true;
-
         while (Floor.transform.position.y < 2)
         {
             Vector3 NewPosition = Floor.transform.position + Vector3.up * Time.deltaTime;
@@ -238,13 +234,10 @@ public class SpawnManagerDynamicType : MonoBehaviour
             yield return null;
         }
 
-        IsCoroutineRunning = false;
     }
 
     IEnumerator MoveFloorDown()
     {
-        IsCoroutineRunning = true;
-
         while (Floor.transform.position.y > -5)
         {
             Vector3 NewPosition = Floor.transform.position + Vector3.down * Time.deltaTime;
@@ -255,8 +248,6 @@ public class SpawnManagerDynamicType : MonoBehaviour
 
             yield return null;
         }
-
-        IsCoroutineRunning = false;
     }
 
     IEnumerator PlayGhostSoundAfterDelay(float delay)

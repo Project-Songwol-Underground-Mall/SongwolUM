@@ -21,7 +21,7 @@ public class PlayerWalkingAudio : MonoBehaviour
     {
         Vector3 CurrentPosition = transform.position;
 
-        if (CurrentPosition != PreviousPosition)
+        if (CurrentPosition.x != PreviousPosition.x || CurrentPosition.z != PreviousPosition.z)
         {
             if (!WalkingAudio.isPlaying)
             {

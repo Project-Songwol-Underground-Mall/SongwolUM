@@ -50,7 +50,8 @@ public class TeleportZone : MonoBehaviour
             }
             else
             {
-                other.transform.position = DestinationPosition + Normal;
+                other.transform.position = new Vector3(DestinationPosition.x + Normal.x - 0.2f, DestinationPosition.y + Normal.y,
+                    DestinationPosition.z + Normal.z);
                 Vector3 NewRotation = other.transform.eulerAngles;
                 NewRotation.y -= 180f;
                 other.transform.eulerAngles = NewRotation;

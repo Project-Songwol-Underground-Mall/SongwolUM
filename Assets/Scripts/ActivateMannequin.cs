@@ -56,7 +56,7 @@ public class ActivateMannequin : MonoBehaviour
                 LeftMERenderer.material = MannequinEyesMaterial[1];
                 RightMERenderer.material = MannequinEyesMaterial[1];
                 Invoke("PlaySound", 0.5f);
-                StartCoroutine(MoveOverSeconds(gameObject, MoveDistance, 0.5f));
+                StartCoroutine(MoveOverSeconds(gameObject, MoveDistance, 0.2f));
                 StartCoroutine(ChangeStateAfterDelay(3f));
             }
             else

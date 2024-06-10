@@ -192,6 +192,8 @@ public class GamePlayManager : MonoBehaviour
             ExperimentAPArray[i / 5, i % 5] = ExperimentAPArray[k / 5, k % 5];
             ExperimentAPArray[k / 5, k % 5] = temp;
         }
+        ExperimentAPArray[0, 0] = 6;
+
     }
 
     void GetNextStage(int StageNumber)

@@ -1,11 +1,15 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 public class GamePlayManager : MonoBehaviour
 {
     public GameObject SpawnManager;
     public GameObject ElevatorDoor;
+    public GameObject GameOverPanel;
+    public TextMeshProUGUI TMPNumOfCorrectAnswer;
+
     public bool CanTeleport = true;
 
     int CurrentStage = 0; // 현재 구역 번호
@@ -53,32 +57,43 @@ public class GamePlayManager : MonoBehaviour
     public void ChangeStage(bool IsFront) // 앞으로 전진 혹은 뒤로 돌아갔을 시 스테이지 증가 및 정답여부 판별
     {
         CurrentStage++;
+        Debug.Log("CurrentStage : " + CurrentStage);
+
+        if (CurrentStage == 1)
+        {
+            GetNextStage(CurrentStage);
+            ChangeStageInfoPanel();
+            ChangePSRPanel(true);
+            return;
+        }
+
+        if (CurrentStage == 18)
+        {
+            Debug.Log("게임 종료");
+            ChangePSRPanel(false);
+            ChangeStageInfoPanel();
+            ChangeNOCAPanel();
+            Invoke("EndGame", 0.5f);
+        }
+
+
         if ((IsFront && IsNormalStage) || (!IsFront && !IsNormalStage))
         {
+            PrevStageResultPanel.SetActive(true);
             NumOfCorrectAnswer++;
-            if (CurrentStage == 1) NumOfCorrectAnswer--;
-            if (CurrentStage == 6 || CurrentStage == 12)
-            {
-                SafetyAlarmBoard.SetActive(true);
-                Debug.Log("안전알람 보드가 보여야돼요");
-            }
+ 
             if (CurrentStage == 7 || CurrentStage == 13)
             {
                 NumOfCorrectAnswer--;
-                SafetyAlarmBoard.SetActive(false);
+                PrevStageResultPanel.SetActive(false);
+                GetNextStage(CurrentStage);
             }
-            
-            if (CurrentStage == 17)
-            {
-                Invoke("EndGame", 2.0f);
-            }
-
 
             else
             {
                 Debug.Log("정답!");
                 // GetRandomStage(CurrentStage, true);
-                GetNextStage(CurrentStage, true);
+                GetNextStage(CurrentStage);
                 ChangePSRPanel(true);
             }
         }
@@ -86,9 +101,9 @@ public class GamePlayManager : MonoBehaviour
         else
         {
             Debug.Log("오답!");
-            ElevatorDoor.SetActive(true);
             // GetRandomStage(CurrentStage, false);
-            GetNextStage(CurrentStage, false);
+            PrevStageResultPanel.SetActive(true);
+            GetNextStage(CurrentStage);
             ChangePSRPanel(false);
         }
         ChangeStageInfoPanel();
@@ -144,13 +159,24 @@ public class GamePlayManager : MonoBehaviour
 
     public void ResetTeleport()
     {
-        Debug.Log("5초 후 CanTeleport 리셋");
+        Debug.Log("텔레포트 활성화");
         CanTeleport = true;
     }
 
     void EndGame()
     {
-        Debug.Log("게임 종료");
+        Debug.Log("EndGame 함수 실행");
+        if (TMPNumOfCorrectAnswer != null)
+        {
+            TMPNumOfCorrectAnswer.gameObject.SetActive(true);
+            TMPNumOfCorrectAnswer.text = "총 정답 개수 : " + NumOfCorrectAnswer + " / 15";
+        }
+
+        if (GameOverPanel != null)
+        {
+            GameOverPanel.SetActive(true);
+        }
+        Time.timeScale = 0;
     }
 
 
@@ -166,21 +192,23 @@ public class GamePlayManager : MonoBehaviour
             ExperimentAPArray[i / 5, i % 5] = ExperimentAPArray[k / 5, k % 5];
             ExperimentAPArray[k / 5, k % 5] = temp;
         }
+        ExperimentAPArray[0, 0] = 6;
+
     }
 
-    void GetNextStage(int StageNumber, bool IsCorrectDirection)
+    void GetNextStage(int StageNumber)
     {
         IsNormalStage = true;
         int APNumber = -1; // 이상현상 번호
         if (StageNumber == 6 || StageNumber == 12) // 실험 사이클 종료후 휴식용 일반 스테이지
         {
             IsNormalStage = true;
-            // 현재 휴식 스테이지 임을 나타내는 안내판 스폰, 바닥 표식 변경이 필요
-
+            SafetyAlarmBoard.SetActive(true);
         }
 
         else
         {
+            SafetyAlarmBoard.SetActive(false);
             int Cycle = 0, Index = 0;
             if (StageNumber < 6)
             {
@@ -193,15 +221,13 @@ public class GamePlayManager : MonoBehaviour
                 Index = StageNumber - 7;
             }
             
-            if (13 < StageNumber && StageNumber < 18)
+            if (12 < StageNumber && StageNumber < 18)
             {
                 Cycle = 2;
                 Index = StageNumber - 13;
             }
-            Debug.Log("StageNumber : " + StageNumber);
             Debug.Log("Cycle : " + Cycle + "Index : " + Index);
             Debug.Log("이상현상 번호(-1이면 일반 스테이지) : " + ExperimentAPArray[Cycle, Index]);
-            if (ExperimentAPArray[Cycle, Index] <= 3 && ExperimentAPArray[Cycle, Index] != -1) Debug.Log("퍼즐 이상현상입니다.");
             APNumber = ExperimentAPArray[Cycle, Index];
             if (APNumber != -1) IsNormalStage = false;
         }
@@ -212,6 +238,11 @@ public class GamePlayManager : MonoBehaviour
 
     void ChangeStageInfoPanel()
     {
+        if (CurrentStage == 18)
+        {
+            StageInfoPanel.SetActive(false);
+            return;
+        }
         Renderer SIPRenderer = StageInfoPanel.GetComponent<Renderer>();
 
         if (SIPRenderer != null)
@@ -222,6 +253,12 @@ public class GamePlayManager : MonoBehaviour
 
     void ChangePSRPanel(bool IsCorrect)
     {
+        if (CurrentStage == 18)
+        {
+            PrevStageResultPanel.SetActive(false);
+            return;
+        }
+
         if (CurrentStage == 7 || CurrentStage == 13)
         {
             PrevStageResultPanel.SetActive(false);
@@ -245,6 +282,11 @@ public class GamePlayManager : MonoBehaviour
     {
         if (CurrentStage != 1) NumOfCorrectAnswerPanel.SetActive(true);
 
+        if (CurrentStage == 18)
+        {
+            NumOfCorrectAnswerPanel.SetActive(false);
+            return;
+        }
 
         Renderer SIPRenderer = NumOfCorrectAnswerPanel.GetComponent<Renderer>();
 

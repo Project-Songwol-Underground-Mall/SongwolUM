@@ -6,10 +6,11 @@ public class TeleportZone : MonoBehaviour
 {
 
     public GameObject Player;
-    public GameObject GuideBoard;
+    public GameObject TutorialGuide1;
+    public GameObject TutorialGuide2;
     public Transform Destination;
     public bool IsFront;
-    public float CoolDown = 3f;
+    public float CoolDown = 1f;
 
     // Start is called before the first frame update
     void Start()
@@ -25,12 +26,17 @@ public class TeleportZone : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (GuideBoard != null) 
+        if (TutorialGuide1 != null) 
         {
-            Destroy(GuideBoard);
+            Destroy(TutorialGuide1);
         }
 
-        Debug.Log("충돌한 오브젝트 이름 : " + other.name);
+        if (TutorialGuide2 != null)
+        {
+            Destroy(TutorialGuide2);
+        }
+
+
         if (other.CompareTag("Player") && CheckCanTeleport())
         {
             Vector3 PlayerPosition = other.transform.position;
@@ -44,7 +50,8 @@ public class TeleportZone : MonoBehaviour
             }
             else
             {
-                other.transform.position = DestinationPosition + Normal;
+                other.transform.position = new Vector3(DestinationPosition.x + Normal.x - 0.2f, DestinationPosition.y + Normal.y,
+                    DestinationPosition.z + Normal.z);
                 Vector3 NewRotation = other.transform.eulerAngles;
                 NewRotation.y -= 180f;
                 other.transform.eulerAngles = NewRotation;

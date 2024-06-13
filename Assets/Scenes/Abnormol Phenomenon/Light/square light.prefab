@@ -642,8 +642,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   spotLight: {fileID: 4300587274916104405}
   pointLight: {fileID: 4300587273616323723}
-  blinkDuration: 1
-  offDuration: 1
+  blinkDuration: 2
+  offDuration: 3
 --- !u!114 &4340543044217207035
 MonoBehaviour:
   m_ObjectHideFlags: 0

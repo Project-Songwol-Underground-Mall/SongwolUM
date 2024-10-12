@@ -149,7 +149,7 @@ public class GamePlayManager : MonoBehaviour
             IsNormalStage = false;
         }
         // 여기서 추첨 결과로 나온 번호의 오브젝트의 이상현상 발생 Version을 Spawn해줘야 한다.
-        SpawnManager.GetComponent<PhenomenonManagement>().SetPhenomenon(AbnormalPhenomenonNumber, IsNormalStage);
+        SpawnManager.GetComponent<PhenomenonManager>().SetPhenomenon(AbnormalPhenomenonNumber, IsNormalStage);
 
 
         // 이상현상 Version의 오브젝트를 제외한 나머지 오브젝트를 스폰해준다. 스폰해두고 남겨놓는 방법도 고려중.
@@ -232,7 +232,7 @@ public class GamePlayManager : MonoBehaviour
         }
 
         // 여기서 현재 스테이지 번호에 맞는 이상현상 발생 Version 오브젝트를 Spawn해줘야 한다.
-        SpawnManager.GetComponent<PhenomenonManagement>().SetPhenomenon(APNumber, IsNormalStage);
+        SpawnManager.GetComponent<PhenomenonManager>().SetPhenomenon(APNumber, IsNormalStage);
     }
 
     void ChangeStageInfoPanel()

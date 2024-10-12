@@ -6,6 +6,7 @@ using UnityEngine;
 public class PhenomenonArr
 {
     public GameObject[] PhenomenonArray = new GameObject[3];
+    // 스포너 오브젝트, 정상 오브젝트, 이상현상 오브젝트
     private bool IsFixedType;
 
     PhenomenonArr(GameObject[] phenomenonArray, bool isFixedType)
@@ -38,7 +39,7 @@ public class PhenomenonArr
     // IsFixedType이 false : Spawner를 통한 Spawn 및 별도 로직을 구현해야 한다.
 }
 
-public class PhenomenonManagement : MonoBehaviour
+public class PhenomenonManager : MonoBehaviour
 {
     public PhenomenonArr[] PhenomenonSpawner = new PhenomenonArr[12];
 

@@ -6,7 +6,34 @@ using UnityEngine;
 public class PhenomenonArr
 {
     public GameObject[] PhenomenonArray = new GameObject[3];
-    public bool IsFixedType;
+    private bool IsFixedType;
+
+    PhenomenonArr(GameObject[] phenomenonArray, bool isFixedType)
+    {
+        PhenomenonArray = phenomenonArray;
+        IsFixedType = isFixedType;
+    }
+
+    public bool GetIsFixedType()
+    { 
+        return IsFixedType; 
+    }
+
+    public void SetIsFixedType(bool val)
+    {
+        IsFixedType = val; 
+    }
+
+    public GameObject[] GetPhenomenonArray()
+    {
+        return PhenomenonArray;
+    }
+
+    public void SetPhenomenonArray(GameObject[] val)
+    { 
+        PhenomenonArray = val;
+    }
+
     // IsFixedType이 true : Spawner를 통한 별도의 작업 불필요, SetActive로 활성화 비활성화만
     // IsFixedType이 false : Spawner를 통한 Spawn 및 별도 로직을 구현해야 한다.
 }
@@ -14,10 +41,23 @@ public class PhenomenonArr
 public class PhenomenonManagement : MonoBehaviour
 {
     public PhenomenonArr[] PhenomenonSpawner = new PhenomenonArr[12];
-    public bool IsNormal = true;
 
+    private void Awake()
+    {
+        for (int i = 0; i < PhenomenonSpawner.Length; i++)
+        {
+            PhenomenonArr curPhenomenon = PhenomenonSpawner[i];
+            if (curPhenomenon.GetPhenomenonArray()[0].GetComponent<SpawnManagerFixedType>() != null)
+            {
+                curPhenomenon.SetIsFixedType(true);
+            }
+            else
+            {
+                curPhenomenon.SetIsFixedType(false);
+            }
+        }
+    }
 
-    // Start is called before the first frame update
     void Start()
     {
         SetPhenomenon(0, true);
@@ -34,13 +74,13 @@ public class PhenomenonManagement : MonoBehaviour
 
             if (i == abnormalPhenomenonNumber)
             {
-                if (curPhenomenon.IsFixedType)
+                if (curPhenomenon.GetIsFixedType())
                 {
-                    curPhenomenon.PhenomenonArray[0].GetComponent<SpawnManagerFixedType>().SpawnObject(curPhenomenon.PhenomenonArray, isNormal);
+                    curPhenomenon.GetPhenomenonArray()[0].GetComponent<SpawnManagerFixedType>().SpawnObject(curPhenomenon.GetPhenomenonArray(), isNormal);
                 }
                 else
                 {
-                    curPhenomenon.PhenomenonArray[0].GetComponent<SpawnManagerDynamicType>().ActivateAP(i, isNormal);
+                    curPhenomenon.GetPhenomenonArray()[0].GetComponent<SpawnManagerDynamicType>().ActivateAP(i, isNormal);
                 }
             }
         }

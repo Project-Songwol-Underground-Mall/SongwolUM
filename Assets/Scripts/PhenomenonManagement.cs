@@ -13,7 +13,6 @@ public class PhenomenonArr
 
 public class PhenomenonManagement : MonoBehaviour
 {
-    // 이상현상 종류가 FixedType이냐, DynamicType이냐에 따라 작동방식에 차이를 줘야 할 듯.
     public PhenomenonArr[] PhenomenonSpawner = new PhenomenonArr[12];
     public bool IsNormal = true;
 
@@ -24,54 +23,40 @@ public class PhenomenonManagement : MonoBehaviour
         SetPhenomenon(0, true);
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
-    public void DestroyPhenomenon()
-    {
-        
-    }
-
-    public void SetPhenomenon(int PhenomenonNumber, bool isNormal)
+    public void SetPhenomenon(int abnormalPhenomenonNumber, bool isNormal)
     {
         // isNormal이 true일 때에는 모든 스포너가 정상 버전의 오브젝트를 소환한다.
         // isNormal이 false, 즉 이상현상 스테이지일 때는 PhenomenonNumber에 해당하는 스포너만 이상현상 버전의 오브젝트를 스폰한다.
 
-        Debug.Log("isNormal : " + isNormal);
         for (int i = 0; i < PhenomenonSpawner.Length; i++)
         {
-            // 스폰은 세현이가 인스펙터에 오브젝트 다 넣으면 주석 풀기
-            if (i == PhenomenonNumber && !isNormal)
+            PhenomenonArr curPhenomenon = PhenomenonSpawner[i];
+            if (i == abnormalPhenomenonNumber && !isNormal)
             {
-                if (PhenomenonSpawner[i].IsFixedType) Spawn(i, false);
-                else PhenomenonSpawner[i].PhenomenonArray[0].GetComponent<SpawnManagerDynamicType>().ActivateAP(i, false);
+                if (curPhenomenon.IsFixedType)
+                {
+                    curPhenomenon.PhenomenonArray[0].GetComponent<SpawnManagerFixedType>().SpawnObject(curPhenomenon.PhenomenonArray, true);
+                }
+                else
+                {
+                    curPhenomenon.PhenomenonArray[0].GetComponent<SpawnManagerDynamicType>().ActivateAP(i, false);
+                }
             }
             else
             {
-                if (PhenomenonSpawner[i].IsFixedType) Spawn(i, true);
-                else PhenomenonSpawner[i].PhenomenonArray[0].GetComponent<SpawnManagerDynamicType>().ActivateAP(i, true);
+                if (curPhenomenon.IsFixedType)
+                {
+                    curPhenomenon.PhenomenonArray[0].GetComponent<SpawnManagerFixedType>().SpawnObject(curPhenomenon.PhenomenonArray, false);
+                }
+                else
+                {
+                    curPhenomenon.PhenomenonArray[0].GetComponent<SpawnManagerDynamicType>().ActivateAP(i, true);
+                }
             }
         }
-
     }
-
-
-    public void Spawn(int PhenomenonNumber, bool isNormal)
+    public void DestroyPhenomenon()
     {
-        if (isNormal)
-        {
-            PhenomenonSpawner[PhenomenonNumber].PhenomenonArray[1].SetActive(true);
-            PhenomenonSpawner[PhenomenonNumber].PhenomenonArray[2].SetActive(false);
-
-        }
-        else
-        {
-            PhenomenonSpawner[PhenomenonNumber].PhenomenonArray[1].SetActive(false);
-            PhenomenonSpawner[PhenomenonNumber].PhenomenonArray[2].SetActive(true);
-        }
 
     }
 }

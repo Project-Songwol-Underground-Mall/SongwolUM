@@ -14,7 +14,7 @@ public class GamePlayManager : MonoBehaviour
 
     int CurrentStage = 0; // 현재 구역 번호
     bool IsNormalStage = true; // 스테이지의 정상 및 이상현상 여부
-    int AbnormalNumber = -1; // 이상현상 스테이지에서 발생시킬 이상현상 번호
+    int AbnormalPhenomenonNumber = -1; // 이상현상 스테이지에서 발생시킬 이상현상 번호
     bool[] IsAbnormalOccured = new bool[20]; // 이상현상 번호에 따른 발생 여부
 
 
@@ -116,7 +116,7 @@ public class GamePlayManager : MonoBehaviour
         if (!IsCorrectDirection)
         {
             Debug.Log("오답입니다!");
-            AbnormalNumber = -1;
+            AbnormalPhenomenonNumber = -1;
             IsNormalStage = true;
             for (int i = 0; i < IsAbnormalOccured.Length; i++) IsAbnormalOccured[i] = false;
             return;
@@ -133,23 +133,23 @@ public class GamePlayManager : MonoBehaviour
         if (Result > Boundary && !IsNormalStage) // 이전 스테이지가 이상현상 스테이지이고 추첨 결과가 일반 스테이지
         {
             Debug.Log("이번 스테이지는 일반 스테이지입니다.");
-            AbnormalNumber = -1;
+            AbnormalPhenomenonNumber = -1;
             IsNormalStage = true;
         }
 
         else if (Result <= Boundary || IsNormalStage) // 이전 스테이지가 일반 스테이지거나 추첨 결과가 이상현상 스테이지
         {
             Debug.Log("이번 스테이지는 이상현상 스테이지입니다.");
-            AbnormalNumber = Random.Range(0, 20);
-            while (IsAbnormalOccured[AbnormalNumber])
+            AbnormalPhenomenonNumber = Random.Range(0, 20);
+            while (IsAbnormalOccured[AbnormalPhenomenonNumber])
             {
-                AbnormalNumber = Random.Range(0, 20);
+                AbnormalPhenomenonNumber = Random.Range(0, 20);
             }
-            IsAbnormalOccured[AbnormalNumber] = true;
+            IsAbnormalOccured[AbnormalPhenomenonNumber] = true;
             IsNormalStage = false;
         }
         // 여기서 추첨 결과로 나온 번호의 오브젝트의 이상현상 발생 Version을 Spawn해줘야 한다.
-        SpawnManager.GetComponent<PhenomenonManagement>().SetPhenomenon(AbnormalNumber, IsNormalStage);
+        SpawnManager.GetComponent<PhenomenonManagement>().SetPhenomenon(AbnormalPhenomenonNumber, IsNormalStage);
 
 
 

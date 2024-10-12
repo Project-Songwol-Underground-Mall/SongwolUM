@@ -4,9 +4,6 @@ using UnityEngine;
 
 public class SpawnManagerFixedType : MonoBehaviour
 {
-
-
-
     public void SpawnObject(GameObject[] phenomenonArr, bool isNormal)
     {
         if (isNormal)

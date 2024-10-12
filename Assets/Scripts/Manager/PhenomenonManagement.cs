@@ -8,7 +8,7 @@ public class PhenomenonArr
     public GameObject[] PhenomenonArray = new GameObject[3];
     public bool IsFixedType;
     // IsFixedType이 true : Spawner를 통한 별도의 작업 불필요, SetActive로 활성화 비활성화만
-    // IsFixedType이 false : Spawner를 통한 Spawn, 별도의 스크립트 작업 필요
+    // IsFixedType이 false : Spawner를 통한 Spawn 및 별도 로직을 구현해야 한다.
 }
 
 public class PhenomenonManagement : MonoBehaviour
@@ -31,26 +31,16 @@ public class PhenomenonManagement : MonoBehaviour
         for (int i = 0; i < PhenomenonSpawner.Length; i++)
         {
             PhenomenonArr curPhenomenon = PhenomenonSpawner[i];
-            if (i == abnormalPhenomenonNumber && !isNormal)
+
+            if (i == abnormalPhenomenonNumber)
             {
                 if (curPhenomenon.IsFixedType)
                 {
-                    curPhenomenon.PhenomenonArray[0].GetComponent<SpawnManagerFixedType>().SpawnObject(curPhenomenon.PhenomenonArray, true);
+                    curPhenomenon.PhenomenonArray[0].GetComponent<SpawnManagerFixedType>().SpawnObject(curPhenomenon.PhenomenonArray, isNormal);
                 }
                 else
                 {
-                    curPhenomenon.PhenomenonArray[0].GetComponent<SpawnManagerDynamicType>().ActivateAP(i, false);
-                }
-            }
-            else
-            {
-                if (curPhenomenon.IsFixedType)
-                {
-                    curPhenomenon.PhenomenonArray[0].GetComponent<SpawnManagerFixedType>().SpawnObject(curPhenomenon.PhenomenonArray, false);
-                }
-                else
-                {
-                    curPhenomenon.PhenomenonArray[0].GetComponent<SpawnManagerDynamicType>().ActivateAP(i, true);
+                    curPhenomenon.PhenomenonArray[0].GetComponent<SpawnManagerDynamicType>().ActivateAP(i, isNormal);
                 }
             }
         }

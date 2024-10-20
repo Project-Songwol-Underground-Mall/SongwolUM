@@ -10,17 +10,14 @@ public class StageInfoManager : MonoBehaviour
     public GameObject GameEndPanel; // 게임 종료 패널
 
     // 스테이지 정보 패널 마테리얼 배열
-    public Material[] StageInfoMaterial = new Material[GameManager.Instance.GetNumOfStages()];
+    public Material[] StageInfoMaterial;
 
     // 이전 스테이지 정답 여부 패널 마테리얼 배열
     public Material[] PrevStageResultMaterial = new Material[2]; 
 
-    // 맞춘 정답 개수 패널 마테리얼 배열 -> VR실험 전용이크로 스크립트 옮길 필요
-    public Material[] NumOfCorrectAnswerMaterial = new Material[16];
-
     void Start()
     {
-        
+        StageInfoMaterial = new Material[GameManager.Instance.GetNumOfStages()];
     }
 
     public void ChangeStageInfoPanel()
@@ -62,13 +59,15 @@ public class StageInfoManager : MonoBehaviour
     public void SetAllPanelInactive()
     {
         StageInfoPanel.SetActive(false);
+        PrevStageResultPanel.SetActive(false);
     }
 
     // VR Experiment Version에서만 사용
     private TextMeshProUGUI TMPNumOfCorrectAnswer;
     private GameObject SafetyAlarmBoard;
     private GameObject NumOfCorrectAnswerPanel;
-    void ChangeNOCAPanel()
+    private Material[] NumOfCorrectAnswerMaterial = new Material[16];
+    void ChangeNumberOfCorrectAnswerPanel()
     {
         int currentStage = GameManager.Instance.GetNumOfStages();
         if (currentStage != 1) NumOfCorrectAnswerPanel.SetActive(true);

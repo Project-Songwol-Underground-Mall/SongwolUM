@@ -8,14 +8,16 @@ public class GameManager : MonoBehaviour
     public static GameManager Instance { get; private set; }
     private bool canTeleport = true;
     private bool isNormalStage = true; // 스테이지의 정상 및 이상현상 여부
-    private const int numOfStages = 4;
-    private const int numOfPhenomenons = 18;
+    private const int numOfStages = 4; // 목표 스테이지 수
+    private const int numOfPhenomenons = 18; // 이상현상 개수
     private int currentStage = 0;// 현재 구역 번호
     private int abnormalPhenomenonNumber = -1; // 이상현상 스테이지에서 발생시킬 이상현상 번호
     public bool[] isAbnormalOccured = new bool[20]; // 이상현상 번호에 따른 발생 여부
 
     public GameObject stageInfoManager;
-    public StageInfoManager stageInfoManagerInstance;
+    public GameObject phenomenonManager;
+    private StageInfoManager stageInfoManagerInstance;
+    private PhenomenonManager phenomenonManagerInstance;
 
 
     public bool GetCanTeleport() { return canTeleport; }
@@ -39,21 +41,11 @@ public class GameManager : MonoBehaviour
         Instance = this;
         DontDestroyOnLoad(gameObject);
     }
-
-
-    public GameObject phenomenonManager;
-
     void Start()
     {
         stageInfoManagerInstance = stageInfoManager.GetComponent<StageInfoManager>();
         stageInfoManagerInstance.PrevStageResultPanel.SetActive(false);
         Debug.Log("맨 처음 스테이지는 일반 스테이지입니다.");
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-
     }
 
     // 앞으로 전진 혹은 뒤로 돌아갔을 시 정답여부 판별
@@ -135,14 +127,6 @@ public class GameManager : MonoBehaviour
         stageInfoManagerInstance.GameEndPanel.SetActive(true);
         Time.timeScale = 0;
     }
-
-
-
-
-
-
-
-
 
     // VR Experiment Version에서만 사용
     // 스테이지 조직

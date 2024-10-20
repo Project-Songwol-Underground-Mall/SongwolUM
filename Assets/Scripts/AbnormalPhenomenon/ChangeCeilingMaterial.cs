@@ -23,7 +23,7 @@ public class ChangeCeilingMaterial : MonoBehaviour
     {
         if (other.CompareTag("Player") && !isChanged)
         {
-            DTPM.GetComponent<SpawnManagerDynamicType>().ChangeCeilingToEyeBall();
+            DTPM.GetComponent<SpawnDynamicType>().ChangeCeilingToEyeBall();
             isChanged = true;
         }
         else Debug.Log("부딪힌 대상이 플레이어가 아님");

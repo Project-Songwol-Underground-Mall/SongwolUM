@@ -19,7 +19,7 @@ public class SirenController : MonoBehaviour
 
     private void OnEnable()
     {
-        SpawnManagerDynamicType spawnManagerScript = SMDT.GetComponent<SpawnManagerDynamicType>();
+        SpawnDynamicType spawnManagerScript = SMDT.GetComponent<SpawnDynamicType>();
         phenomenonNumber = spawnManagerScript.GetPhenomenonNumber();
         Debug.Log("Phenomenon Number: " + phenomenonNumber);
     }

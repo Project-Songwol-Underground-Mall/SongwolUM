@@ -9,7 +9,7 @@ public class GameManager : MonoBehaviour
     private bool canTeleport = true;
     private bool isNormalStage = true; // 스테이지의 정상 및 이상현상 여부
     private const int numOfStages = 4; // 목표 스테이지 수
-    private const int numOfPhenomenons = 18; // 이상현상 개수
+    private const int numOfPhenomenons = 12; // 이상현상 개수
     private int currentStage = 0;// 현재 구역 번호
     private int abnormalPhenomenonNumber = -1; // 이상현상 스테이지에서 발생시킬 이상현상 번호
     public bool[] isAbnormalOccured = new bool[20]; // 이상현상 번호에 따른 발생 여부
@@ -45,7 +45,6 @@ public class GameManager : MonoBehaviour
     {
         stageInfoManagerInstance = stageInfoManager.GetComponent<StageInfoManager>();
         stageInfoManagerInstance.PrevStageResultPanel.SetActive(false);
-        Debug.Log("맨 처음 스테이지는 일반 스테이지입니다.");
     }
 
     // 앞으로 전진 혹은 뒤로 돌아갔을 시 정답여부 판별
@@ -54,20 +53,17 @@ public class GameManager : MonoBehaviour
         bool isCorrect = false;
         if ((IsFront && isNormalStage) || (!IsFront && !isNormalStage))
         {
-            Debug.Log("정답!");
             isCorrect = true;
             currentStage++;
 
             if (currentStage == numOfStages)
             {
-                Debug.Log("게임 종료");
                 stageInfoManagerInstance.SetAllPanelInactive();
                 Invoke("EndGame", 0.5f);
             }
         }
         else
         {
-            Debug.Log("오답!");
             currentStage = 0;
         }
 

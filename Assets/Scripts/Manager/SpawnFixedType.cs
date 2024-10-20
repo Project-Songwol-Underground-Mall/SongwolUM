@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SpawnManagerFixedType : MonoBehaviour
+public class SpawnFixedType : MonoBehaviour
 {
     public void SpawnObject(GameObject[] phenomenonArr, bool isNormal)
     {

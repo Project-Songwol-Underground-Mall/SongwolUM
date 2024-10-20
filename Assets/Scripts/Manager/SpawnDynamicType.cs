@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SpawnManagerDynamicType : MonoBehaviour
+public class SpawnDynamicType : MonoBehaviour
 {
     public GameObject Player;
     public GameObject Mannequin;
@@ -36,7 +36,7 @@ public class SpawnManagerDynamicType : MonoBehaviour
         
     }
     
-    public void ActivateAP(int PhenomenonNumber, bool isNormal)
+    public void ActivateAbnormalPhenomenon(int PhenomenonNumber, bool isNormal)
     {
         phenomenonNumber = PhenomenonNumber;
         if (PhenomenonNumber == 4) AnimateMannequin(isNormal);

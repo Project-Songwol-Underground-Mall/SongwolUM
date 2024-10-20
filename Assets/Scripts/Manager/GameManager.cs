@@ -3,19 +3,31 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 
-public class GamePlayManager : MonoBehaviour
+public class GameManager : MonoBehaviour
 {
+    public static GameManager Instance { get; private set; }
+    public bool canTeleport { get; set; } = true;
+    public bool isNormalStage { get; set; } = true; // 스테이지의 정상 및 이상현상 여부
+    public int currentStage { get; set; } = 0;// 현재 구역 번호
+    public int abnormalPhenomenonNumber { get; set; } = -1; // 이상현상 스테이지에서 발생시킬 이상현상 번호
+    public bool[] isAbnormalOccured = new bool[20]; // 이상현상 번호에 따른 발생 여부
+
+    void Awake()
+    {
+        if (Instance != null)
+        {
+            Destroy(gameObject);
+            return;
+        }
+        Instance = this;
+        DontDestroyOnLoad(gameObject);
+    }
+
+
     public GameObject SpawnManager;
     public GameObject ElevatorDoor;
     public GameObject GameOverPanel;
     public TextMeshProUGUI TMPNumOfCorrectAnswer;
-
-    public bool CanTeleport = true;
-
-    int CurrentStage = 0; // 현재 구역 번호
-    bool IsNormalStage = true; // 스테이지의 정상 및 이상현상 여부
-    int AbnormalPhenomenonNumber = -1; // 이상현상 스테이지에서 발생시킬 이상현상 번호
-    bool[] IsAbnormalOccured = new bool[20]; // 이상현상 번호에 따른 발생 여부
 
 
     /*VR 실험버전 추가 내용*/
@@ -51,23 +63,23 @@ public class GamePlayManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
+       
     }
 
     public void ChangeStage(bool IsFront) // 앞으로 전진 혹은 뒤로 돌아갔을 시 스테이지 증가 및 정답여부 판별
     {
-        CurrentStage++;
-        Debug.Log("CurrentStage : " + CurrentStage);
+        currentStage++;
+        Debug.Log("CurrentStage : " + currentStage);
 
-        if (CurrentStage == 1)
+        if (currentStage == 1)
         {
-            GetNextStage(CurrentStage);
+            GetNextStage(currentStage);
             ChangeStageInfoPanel();
             ChangePSRPanel(true);
             return;
         }
 
-        if (CurrentStage == 18)
+        if (currentStage == 18)
         {
             Debug.Log("게임 종료");
             ChangePSRPanel(false);
@@ -77,23 +89,23 @@ public class GamePlayManager : MonoBehaviour
         }
 
 
-        if ((IsFront && IsNormalStage) || (!IsFront && !IsNormalStage))
+        if ((IsFront && isNormalStage) || (!IsFront && !isNormalStage))
         {
             PrevStageResultPanel.SetActive(true);
             NumOfCorrectAnswer++;
  
-            if (CurrentStage == 7 || CurrentStage == 13)
+            if (currentStage == 7 || currentStage == 13)
             {
                 NumOfCorrectAnswer--;
                 PrevStageResultPanel.SetActive(false);
-                GetNextStage(CurrentStage);
+                GetNextStage(currentStage);
             }
 
             else
             {
                 Debug.Log("정답!");
                 // GetRandomStage(CurrentStage, true);
-                GetNextStage(CurrentStage);
+                GetNextStage(currentStage);
                 ChangePSRPanel(true);
             }
         }
@@ -103,7 +115,7 @@ public class GamePlayManager : MonoBehaviour
             Debug.Log("오답!");
             // GetRandomStage(CurrentStage, false);
             PrevStageResultPanel.SetActive(true);
-            GetNextStage(CurrentStage);
+            GetNextStage(currentStage);
             ChangePSRPanel(false);
         }
         ChangeStageInfoPanel();
@@ -116,9 +128,9 @@ public class GamePlayManager : MonoBehaviour
         if (!IsCorrectDirection)
         {
             Debug.Log("오답입니다!");
-            AbnormalPhenomenonNumber = -1;
-            IsNormalStage = true;
-            for (int i = 0; i < IsAbnormalOccured.Length; i++) IsAbnormalOccured[i] = false;
+            abnormalPhenomenonNumber = -1;
+            isNormalStage = true;
+            for (int i = 0; i < isAbnormalOccured.Length; i++) isAbnormalOccured[i] = false;
             return;
         }
 
@@ -130,26 +142,26 @@ public class GamePlayManager : MonoBehaviour
 
         int Result = Random.Range(0, 100);
 
-        if (Result > Boundary && !IsNormalStage) // 이전 스테이지가 이상현상 스테이지이고 추첨 결과가 일반 스테이지
+        if (Result > Boundary && !isNormalStage) // 이전 스테이지가 이상현상 스테이지이고 추첨 결과가 일반 스테이지
         {
             Debug.Log("이번 스테이지는 일반 스테이지입니다.");
-            AbnormalPhenomenonNumber = -1;
-            IsNormalStage = true;
+            abnormalPhenomenonNumber = -1;
+            isNormalStage = true;
         }
 
-        else if (Result <= Boundary || IsNormalStage) // 이전 스테이지가 일반 스테이지거나 추첨 결과가 이상현상 스테이지
+        else if (Result <= Boundary || isNormalStage) // 이전 스테이지가 일반 스테이지거나 추첨 결과가 이상현상 스테이지
         {
             Debug.Log("이번 스테이지는 이상현상 스테이지입니다.");
-            AbnormalPhenomenonNumber = Random.Range(0, 20);
-            while (IsAbnormalOccured[AbnormalPhenomenonNumber])
+            abnormalPhenomenonNumber = Random.Range(0, 20);
+            while (isAbnormalOccured[abnormalPhenomenonNumber])
             {
-                AbnormalPhenomenonNumber = Random.Range(0, 20);
+                abnormalPhenomenonNumber = Random.Range(0, 20);
             }
-            IsAbnormalOccured[AbnormalPhenomenonNumber] = true;
-            IsNormalStage = false;
+            isAbnormalOccured[abnormalPhenomenonNumber] = true;
+            isNormalStage = false;
         }
         // 여기서 추첨 결과로 나온 번호의 오브젝트의 이상현상 발생 Version을 Spawn해줘야 한다.
-        SpawnManager.GetComponent<PhenomenonManager>().SetPhenomenon(AbnormalPhenomenonNumber, IsNormalStage);
+        SpawnManager.GetComponent<PhenomenonManager>().SetPhenomenon(abnormalPhenomenonNumber, isNormalStage);
 
 
         // 이상현상 Version의 오브젝트를 제외한 나머지 오브젝트를 스폰해준다. 스폰해두고 남겨놓는 방법도 고려중.
@@ -159,7 +171,7 @@ public class GamePlayManager : MonoBehaviour
     public void ResetTeleport()
     {
         Debug.Log("텔레포트 활성화");
-        CanTeleport = true;
+        canTeleport = true;
     }
 
     void EndGame()
@@ -197,11 +209,11 @@ public class GamePlayManager : MonoBehaviour
 
     void GetNextStage(int StageNumber)
     {
-        IsNormalStage = true;
+        isNormalStage = true;
         int APNumber = -1; // 이상현상 번호
         if (StageNumber == 6 || StageNumber == 12) // 실험 사이클 종료후 휴식용 일반 스테이지
         {
-            IsNormalStage = true;
+            isNormalStage = true;
             SafetyAlarmBoard.SetActive(true);
         }
 
@@ -228,16 +240,16 @@ public class GamePlayManager : MonoBehaviour
             Debug.Log("Cycle : " + Cycle + "Index : " + Index);
             Debug.Log("이상현상 번호(-1이면 일반 스테이지) : " + ExperimentAPArray[Cycle, Index]);
             APNumber = ExperimentAPArray[Cycle, Index];
-            if (APNumber != -1) IsNormalStage = false;
+            if (APNumber != -1) isNormalStage = false;
         }
 
         // 여기서 현재 스테이지 번호에 맞는 이상현상 발생 Version 오브젝트를 Spawn해줘야 한다.
-        SpawnManager.GetComponent<PhenomenonManager>().SetPhenomenon(APNumber, IsNormalStage);
+        SpawnManager.GetComponent<PhenomenonManager>().SetPhenomenon(APNumber, isNormalStage);
     }
 
     void ChangeStageInfoPanel()
     {
-        if (CurrentStage == 18)
+        if (currentStage == 18)
         {
             StageInfoPanel.SetActive(false);
             return;
@@ -246,19 +258,19 @@ public class GamePlayManager : MonoBehaviour
 
         if (SIPRenderer != null)
         {
-            SIPRenderer.material = StageInfoMaterial[CurrentStage];
+            SIPRenderer.material = StageInfoMaterial[currentStage];
         }
     }
 
     void ChangePSRPanel(bool IsCorrect)
     {
-        if (CurrentStage == 18)
+        if (currentStage == 18)
         {
             PrevStageResultPanel.SetActive(false);
             return;
         }
 
-        if (CurrentStage == 7 || CurrentStage == 13)
+        if (currentStage == 7 || currentStage == 13)
         {
             PrevStageResultPanel.SetActive(false);
             return;
@@ -279,9 +291,9 @@ public class GamePlayManager : MonoBehaviour
 
     void ChangeNOCAPanel()
     {
-        if (CurrentStage != 1) NumOfCorrectAnswerPanel.SetActive(true);
+        if (currentStage != 1) NumOfCorrectAnswerPanel.SetActive(true);
 
-        if (CurrentStage == 18)
+        if (currentStage == 18)
         {
             NumOfCorrectAnswerPanel.SetActive(false);
             return;

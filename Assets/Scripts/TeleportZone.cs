@@ -4,13 +4,11 @@ using UnityEngine;
 
 public class TeleportZone : MonoBehaviour
 {
-
-    public GameObject Player;
     public GameObject TutorialGuide1;
     public GameObject TutorialGuide2;
     public Transform Destination;
     public bool IsFront;
-    public float CoolDown = 1f;
+    private float CoolDown = 1f;
 
     // Start is called before the first frame update
     void Start()
@@ -36,13 +34,12 @@ public class TeleportZone : MonoBehaviour
             Destroy(TutorialGuide2);
         }
 
-
-        if (other.CompareTag("Player") && CheckCanTeleport())
+        if (other.CompareTag("Player") && GameManager.Instance.GetCanTeleport())
         {
             Vector3 PlayerPosition = other.transform.position;
             Vector3 DestinationPosition = Destination.position;
-            Vector3 Normal = new Vector3(transform.position.x - PlayerPosition.x,
-                0f,
+            Vector3 Normal = 
+                new Vector3(transform.position.x - PlayerPosition.x, 0f, 
                 transform.position.z - PlayerPosition.z);
             if (IsFront)
             {
@@ -56,31 +53,17 @@ public class TeleportZone : MonoBehaviour
                 NewRotation.y -= 180f;
                 other.transform.eulerAngles = NewRotation;
             }
-            // GPM의 ChangeStage 호출, 부딪힌 텔레포트존의 앞뒤 여부와 현재 스테이지 이상현상 유무에 따른 처리 진행
-            Player.GetComponent<GamePlayManager>().ChangeStage(IsFront); 
-            Invoke("ResetTeleport", CoolDown);
+            // 부딪힌 텔레포트존의 앞뒤 여부와 현재 스테이지 이상현상 유무에 따른 처리 진행
+            GameManager.Instance.SetCanTeleport(false);
+            GameManager.Instance.ChangeStage(IsFront);
+            StartCoroutine(ResetTeleportAfterCoolDown());
         }
         else Debug.Log("아직 텔레포트 불가");
     }
 
-    private bool CheckCanTeleport() 
+    private IEnumerator ResetTeleportAfterCoolDown()
     {
-
-        GamePlayManager GPM = Player.GetComponent<GamePlayManager>();
-        if (GPM != null && GPM.CanTeleport)
-        {
-            GPM.CanTeleport = false;
-            return true;
-        }
-        return false;
-    }
-
-    private void ResetTeleport()
-    {
-        GamePlayManager GPM = Player.GetComponent<GamePlayManager>();
-        if (GPM != null)
-        {
-            GPM.ResetTeleport();
-        }
+        yield return new WaitForSeconds(CoolDown);
+        GameManager.Instance.SetCanTeleport(true);
     }
 }
